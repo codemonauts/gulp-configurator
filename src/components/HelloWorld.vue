@@ -29,26 +29,25 @@
               h3 packages
               ul
                 li(v-for="p in pugSnippets.packages") {{p}}
-              pre.language-shell
-                code {{listPackages(pugSnippets.packages)}}
-
+              CodeSnippet(:snippet='listPackages(pugSnippets.packages)' language='shell')
               h3 function
-              pre.language-js
-                code {{pugSnippets.function}}
+              CodeSnippet(:snippet='pugSnippets.function' language='js')
               h3 task
-              pre.language-js
-                code {{pugSnippets.task}}
+              CodeSnippet(:snippet='pugSnippets.task' language='js')
               h3 watch
-              pre.language-js
-                code {{pugSnippets.watch}}
+              CodeSnippet(:snippet='pugSnippets.watch' language='js')
       v-tab-item(key='sass')
         h2 Styles with SASS
 </template>
 
 <script>
 import pugSnippets from '../assets/snippets/pug'
+import CodeSnippet from './CodeSnippet'
 
 export default {
+  components: {
+    CodeSnippet
+  },
   data() {
     return {
       craft: '',
@@ -70,7 +69,7 @@ export default {
       packages.forEach(function(name) {
         npm += name+' '
       })
-      npm += ' --save'
+      npm += '--save'
       return npm
     }
   }
@@ -81,6 +80,5 @@ export default {
 .v-input
   display: inline-flex
   margin-left: 1rem
-.v-application code
-  box-shadow: none
+
 </style>
