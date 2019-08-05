@@ -1,58 +1,86 @@
-<template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+<template lang="pug">
+  v-container
+    v-tabs
+      v-tab(key='conf') Configurator
+      v-tab(key='pug') PUG
+      v-tab(key='sass') SASS
+      v-tab-item(key='conf')
+        h1 Please choose your configuration!
+        v-form
+          h2 Craft Version
+          v-radio-group(v-model="craft" row)
+            v-radio(label="Craft 2" value="2")
+            v-radio(label="Craft 3" value="3")
+          h2 Components
+          v-checkbox(v-model="pug" label="Templates (pug)")
+          v-checkbox(v-model="sass" label="Style (sass)")
+          v-checkbox(v-model="script" label="JavaScript (jQuery & ES6)")
+          v-checkbox(v-model="img" label="Images")
+          v-checkbox(v-model="twig" label="Twig (XML)")
+          v-checkbox(v-model="email" label="E-Mail")
+          h2 Features
+          v-checkbox(v-model="foundation" label="Foundation Sites")
+          v-checkbox(v-model="fontawesome" label="FontAwesome")
+          v-checkbox(v-model="styleguide" label="Styleguide")
+      v-tab-item(key="pug")
+        v-card
+          v-card-text
+              h2 Templates with pug
+              h3 packages
+              ul
+                li(v-for="p in pugSnippets.packages") {{p}}
+              pre.language-shell
+                code {{listPackages(pugSnippets.packages)}}
+
+              h3 function
+              pre.language-js
+                code {{pugSnippets.function}}
+              h3 task
+              pre.language-js
+                code {{pugSnippets.task}}
+              h3 watch
+              pre.language-js
+                code {{pugSnippets.watch}}
+      v-tab-item(key='sass')
+        h2 Styles with SASS
 </template>
 
 <script>
+import pugSnippets from '../assets/snippets/pug'
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return {
+      craft: '',
+      pug: false,
+      sass: false,
+      script: false,
+      img: false,
+      twig: false,
+      email: false,
+      foundation: false,
+      fontawesome: false,
+      styleguide: false,
+      pugSnippets: pugSnippets
+    }
+  },
+  methods: {
+    listPackages(packages) {
+      var npm = 'npm install '
+      packages.forEach(function(name) {
+        npm += name+' '
+      })
+      npm += ' --save'
+      return npm
+    }
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="sass" scoped>
+.v-input
+  display: inline-flex
+  margin-left: 1rem
+.v-application code
+  box-shadow: none
 </style>
