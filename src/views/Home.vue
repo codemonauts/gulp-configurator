@@ -1,13 +1,10 @@
-<template>
-  <HelloWorld />
+<template lang="pug">
+v-container
+  h1 Welcome!
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld';
 
 export default {
-  components: {
-    HelloWorld,
-  },
 };
 </script>

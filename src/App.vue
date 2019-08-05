@@ -1,36 +1,24 @@
-<template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>gulp</span>
-        <span class="font-weight-light">configurator</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/codemonauts/gulp-configurator"
-        target="_blank"
-      >
-        <span class="mr-2">Repository</span>
-      </v-btn>
-    </v-app-bar>
+<template lang="pug">
+  v-app
+    v-app-bar(app)
+      v-toolbar-title.headline.text-uppercase
+        span gulp
+        span.font-weight-light configurator
+      v-btn(text to="configurator")
+        span.mr-2 Configurator
+      v-btn(text to="snippets")
+        span.mr-2 Snippets
+      v-spacer
+      v-btn(text href="https://github.com/codemonauts/gulp-configurator" target="_blank")
+        span.mr-2 Repository
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+    v-content
+      router-view
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
-  },
-  data: () => ({
-    //
-  }),
 };
 </script>
