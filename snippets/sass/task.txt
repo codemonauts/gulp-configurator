@@ -1,0 +1,3 @@
+gulp.task('sass', function() {
+    return sass(gulp.src('sass/styles.sass'), '../public/css');
+});

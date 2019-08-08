@@ -17,6 +17,24 @@ export default {
                 development: []
             },
             snippets: ['function', 'task', 'watch']
+        },
+        {
+            title: 'Styles (sass)',
+            type: 'sass',
+            packages: {
+                dependencies: ['gulp-sass', 'autoprefixer', 'cssnano', 'gulp-postcss'],
+                development: ['gulp-sourcemaps']
+            },
+            snippets: ['function', 'task', 'watch']
+        },
+        {
+            title: 'JavaScript',
+            type: 'js',
+            packages: {
+                dependencies: ['browserify', 'vinyl-source-stream', 'vinyl-buffer', 'babelify', 'gulp-uglify-es', '@babel/core', '@babel/preset-env'],
+                development: ['gulp-sourcemaps']
+            },
+            snippets: ['function', 'task', 'watch']
         }
     ]
 }

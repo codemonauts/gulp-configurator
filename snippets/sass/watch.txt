@@ -1,0 +1,8 @@
+var jswatcher = watcher(['js/**/*.js']);
+jswatcher.on('change', function(path, stat){
+    script(['../public/js']).pipe($.plumber({ errorHandler: onError }))
+        .on('end', function() {
+            log('...re-scripted');
+        })
+        .pipe($.dockerNotify('Build completed', path));
+});

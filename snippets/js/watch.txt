@@ -1,0 +1,16 @@
+var pugwatcher = watcher(['pug/**/*.pug']);
+pugwatcher.on('change', function(path, stat) {
+
+    if(path.startsWith('pug')) {
+        var dir = path.substr(3, path.lastIndexOf('/')-3)
+    } else {
+        var dir = path.substr(0, path.lastIndexOf('/'))
+    }
+
+    templates(gulp.src([path])
+                .pipe($.plumber({ errorHandler: onError })), '../templates/'+dir)
+        .on('end', function() {
+            log('...re-pugged '+ path);
+        })
+        .pipe($.dockerNotify('Templates copied', path));
+});

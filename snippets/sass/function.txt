@@ -1,0 +1,16 @@
+var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano');
+
+function sass(filestream, destination) {
+    return filestream
+        .pipe($.if(isDevelopment(), $.sourcemaps.init()))
+        .pipe($.sass())
+        .pipe($.if(isProduction(), $.postcss([
+            autoprefixer({ browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'] }),
+            cssnano()
+        ]), $.postcss([
+            autoprefixer({ browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'] })
+        ])))
+        .pipe($.if(isDevelopment(), $.sourcemaps.write()))
+        .pipe(gulp.dest(destination));
+}
