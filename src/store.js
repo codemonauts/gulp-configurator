@@ -9,7 +9,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    snippets: {}
+    snippets: {},
+    error: false
   },
   mutations: {
     snippet(state, snippet) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
         state.snippets[snippet.type] = {}
         state.snippets[snippet.type][snippet.part] = snippet.code
       }
+    },
+    error(state, value) {
+      state.error = value
     }
   },
   getters: {
@@ -31,6 +35,9 @@ export default new Vuex.Store({
       } else {
         return 'not available'
       }
+    },
+    error: (state) => {
+      return state.error
     }
   },
   actions: {
@@ -43,6 +50,7 @@ export default new Vuex.Store({
               commit('snippet', {'type': data.type, 'part': data.part, 'code': atob(response.data.content)});
             }
           )
+          .catch(commit('error', true))
     }
   }
 })

@@ -4,6 +4,7 @@
       v-toolbar-title.headline.text-uppercase
         span gulp
         span.font-weight-light configurator
+      v-spacer
       v-btn(text to="configurator")
         span.mr-2 Configurator
       v-btn(text to="snippets")
@@ -13,12 +14,16 @@
         span.mr-2 Repository
 
     v-content
+      v-alert(dense dismissible type='error' v-if='error') Error while retrieving snippets from GitHub.
       router-view
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
+  computed: {
+    ...mapGetters(['error'])
+  }
 };
 </script>
