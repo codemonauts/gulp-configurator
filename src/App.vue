@@ -2,8 +2,9 @@
   v-app
     v-app-bar(app)
       v-toolbar-title.headline.text-uppercase
-        span gulp
-        span.font-weight-light configurator
+        router-link(to='/')
+          span gulp
+          span.font-weight-light configurator
       v-spacer
       v-btn(text to="configurator")
         span.mr-2 Configurator
@@ -41,3 +42,10 @@ export default {
   }
 };
 </script>
+
+<style lang="sass" scoped>
+.v-application
+  a
+    color: inherit
+    text-decoration: none
+</style>
