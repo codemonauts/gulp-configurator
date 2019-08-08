@@ -1,0 +1,7 @@
+var uglify = require('gulp-uglify-es').default;
+
+// * * * BROWSERIFY
+var browserify = require('browserify');
+var source = require("vinyl-source-stream");
+var buffer = require("vinyl-buffer");
+var babel = require('babelify');

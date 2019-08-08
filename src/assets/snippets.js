@@ -26,7 +26,7 @@ export default {
                 dependencies: ['gulp-sass', 'autoprefixer', 'cssnano', 'gulp-postcss'],
                 development: ['gulp-sourcemaps']
             },
-            snippets: ['function', 'task', 'watch'],
+            snippets: ['import', 'function', 'task', 'watch'],
             directory: '"../public/css/**/*"'
         },
         {
@@ -36,7 +36,7 @@ export default {
                 dependencies: ['browserify', 'vinyl-source-stream', 'vinyl-buffer', 'babelify', 'gulp-uglify-es', '@babel/core', '@babel/preset-env'],
                 development: ['gulp-sourcemaps']
             },
-            snippets: ['function', 'task', 'watch'],
+            snippets: ['import', 'function', 'task', 'watch'],
             directory: '"../public/js/**/*"'
         }
     ]

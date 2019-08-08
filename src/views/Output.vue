@@ -66,6 +66,7 @@ export default {
       var tasks = ''
       var watchers = ''
       var directories = []
+      var imports = ''
       if(this.config.pug) {
         var pugtab = this.getTab('pug')
         tasks += this.getSnippet({'type': 'pug', 'part': 'task'}) + '\n'
@@ -78,6 +79,7 @@ export default {
         tasks += this.getSnippet({'type': 'sass', 'part': 'task'}) + '\n'
         functions += this.getSnippet({'type': 'sass', 'part': 'function'}) + '\n'
         watchers += this.getSnippet({'type': 'sass', 'part': 'watch'}) + '\n'
+        imports += this.getSnippet({'type': 'sass', 'part': 'import'}) + '\n'
         directories.push(sasstab.directory)
       }
       if(this.config.script) {
@@ -85,10 +87,11 @@ export default {
         tasks += this.getSnippet({'type': 'js', 'part': 'task'}) + '\n'
         functions += this.getSnippet({'type': 'js', 'part': 'function'}) + '\n'
         watchers += this.getSnippet({'type': 'js', 'part': 'watch'}) + '\n'
+        imports += this.getSnippet({'type': 'js', 'part': 'import'}) + '\n'
         directories.push(jstab.directory)
       }
 
-      var gulpfile = base + '\n'
+      var gulpfile = base.replace('/* * * IMPORTS * * */', imports) + '\n'
       gulpfile += functions + '\n'
       gulpfile += tasks + '\n'
       gulpfile += basetasks.replace("/* * * WATCHERS * * */", watchers).replace('/* add directories here */', directories)
