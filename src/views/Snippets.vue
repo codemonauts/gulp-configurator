@@ -49,13 +49,6 @@ export default {
     listPackages(packages, dev=false) {
       return utils.listPackages(packages, dev)
     }
-  },
-  mounted() {
-    snippets.tabs.forEach((tab) => {
-      tab.snippets.forEach((part) => {
-        this.$store.dispatch('retrieveSnippet', {'type': tab.type, 'part': part})
-      })
-    })
   }
 };
 </script>

@@ -20,10 +20,24 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import snippets from './assets/snippets'
+
 export default {
   name: 'App',
+  data() {
+    return {
+      snippets: snippets
+    }
+  },
   computed: {
     ...mapGetters(['error'])
+  },
+  mounted() {
+    snippets.tabs.forEach((tab) => {
+      tab.snippets.forEach((part) => {
+        this.$store.dispatch('retrieveSnippet', {'type': tab.type, 'part': part})
+      })
+    })
   }
 };
 </script>
