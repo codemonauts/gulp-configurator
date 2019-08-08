@@ -14,7 +14,7 @@
               h4 development dependencies
               ul
                 li(v-for="p in tab.packages.development") {{p}}
-              CodeSnippet(:snippet='listPackages(tab.packages.development)' language='shell')
+              CodeSnippet(:snippet='listPackages(tab.packages.development, true)' language='shell')
           .snippets(v-for='snippet in tab.snippets')
             h3 {{snippet}}
             CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet)' language='js' :history='githubHistoryUrl(tab.type, snippet)')
