@@ -10,7 +10,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     snippets: {},
-    error: false
+    error: false,
+    config: {}
   },
   mutations: {
     snippet(state, snippet) {
@@ -24,6 +25,10 @@ export default new Vuex.Store({
     },
     error(state, value) {
       state.error = value
+    },
+    config: (state, config) => {
+      state.config = config
+      console.log(state.config)
     }
   },
   getters: {
@@ -38,6 +43,9 @@ export default new Vuex.Store({
     },
     error: (state) => {
       return state.error
+    },
+    config: (state) => {
+      return state.config
     }
   },
   actions: {
@@ -53,6 +61,9 @@ export default new Vuex.Store({
           .catch(() => {
             commit('error', true)
           })
+    },
+    setConfig({commit}, data) {
+      commit('config', data)
     }
   }
 })

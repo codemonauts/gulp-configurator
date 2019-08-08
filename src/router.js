@@ -20,6 +20,11 @@ export default new Router({
       path: '/snippets',
       name: 'snippets',
       component: () => import(/* webpackChunkName: "snippets" */ './views/Snippets.vue')
+    },
+    {
+      path: '/output',
+      name: 'output',
+      component: () => import(/* webpackChunkName: "snippets" */ './views/Output.vue')
     }
   ]
 })

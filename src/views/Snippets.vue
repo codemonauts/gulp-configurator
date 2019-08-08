@@ -40,19 +40,14 @@ export default {
     ...mapGetters(['getSnippet'])
   },
   methods: {
-    listPackages(packages, dev=false) {
-      var npm = 'npm install '
-      packages.forEach(function(name) {
-        npm += name+' '
-      })
-      npm += dev ? '--save-dev' : '--save'
-      return npm
-    },
     retrieveSnippet(type, part) {
       return this.getSnippet({'type': type, 'part': part})
     },
     githubHistoryUrl(type, part) {
       return utils.githubHistoryUrl(type, part)
+    },
+    listPackages(packages, dev=false) {
+      return utils.listPackages(packages, dev)
     }
   },
   mounted() {

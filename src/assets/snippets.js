@@ -16,7 +16,8 @@ export default {
                 dependencies: ['gulp-pug', 'gulp-rename'],
                 development: []
             },
-            snippets: ['function', 'task', 'watch']
+            snippets: ['function', 'task', 'watch'],
+            directory: '"../templates/**/*"'
         },
         {
             title: 'Styles (sass)',
@@ -25,7 +26,8 @@ export default {
                 dependencies: ['gulp-sass', 'autoprefixer', 'cssnano', 'gulp-postcss'],
                 development: ['gulp-sourcemaps']
             },
-            snippets: ['function', 'task', 'watch']
+            snippets: ['function', 'task', 'watch'],
+            directory: '"../public/css/**/*"'
         },
         {
             title: 'JavaScript',
@@ -34,7 +36,8 @@ export default {
                 dependencies: ['browserify', 'vinyl-source-stream', 'vinyl-buffer', 'babelify', 'gulp-uglify-es', '@babel/core', '@babel/preset-env'],
                 development: ['gulp-sourcemaps']
             },
-            snippets: ['function', 'task', 'watch']
+            snippets: ['function', 'task', 'watch'],
+            directory: '"../public/js/**/*"'
         }
     ]
 }
