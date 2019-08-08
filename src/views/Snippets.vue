@@ -17,7 +17,7 @@
               CodeSnippet(:snippet='listPackages(tab.packages.development)' language='shell')
           .snippets(v-for='snippet in tab.snippets')
             h3 {{snippet}}
-            CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet)' language='js' :history='githubUrl(tab.type, snippet)')
+            CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet)' language='js' :history='githubHistoryUrl(tab.type, snippet)')
 
 </template>
 
@@ -51,8 +51,8 @@ export default {
     retrieveSnippet(type, part) {
       return this.getSnippet({'type': type, 'part': part})
     },
-    githubUrl(type, part) {
-      return utils.githubUrl(type, part)
+    githubHistoryUrl(type, part) {
+      return utils.githubHistoryUrl(type, part)
     }
   },
   mounted() {

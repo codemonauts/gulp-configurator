@@ -36,7 +36,7 @@ export default new Vuex.Store({
   actions: {
     retrieveSnippet({commit}, data) {
       axios
-          .get(utils.githubUrl(data.type, data.part), { headers: {
+          .get(utils.githubApiUrl(data.type, data.part), { headers: {
             Authorization: 'Bearer '+ process.env.VUE_APP_GITHUB_TOKEN,
           }})
           .then((response) => {
