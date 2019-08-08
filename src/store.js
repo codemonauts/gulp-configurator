@@ -50,7 +50,9 @@ export default new Vuex.Store({
               commit('snippet', {'type': data.type, 'part': data.part, 'code': atob(response.data.content)});
             }
           )
-          .catch(commit('error', true))
+          .catch(() => {
+            commit('error', true)
+          })
     }
   }
 })
