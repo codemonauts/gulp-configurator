@@ -1,13 +1,16 @@
 <template lang="pug">
 pre(:class="'language-'+language")
   code {{snippet}}
-  v-btn(class="mx-2" fab small v-clipboard:copy="snippet")
-    v-icon mdi-content-copy
+  .buttons
+    v-btn(class="mx-2" fab small v-clipboard:copy="snippet")
+      v-icon mdi-content-copy
+    v-btn(class="mx-2" fab small :href="history" v-if="history" target='_blank')
+      v-icon mdi-history
 </template>
 
 <script>
 export default {
-  props: ['snippet', 'language']
+  props: ['snippet', 'language', 'history']
 }
 </script>
 
@@ -18,5 +21,10 @@ pre
   display: flex
   justify-content: space-between
   align-items: center
+.buttons
+  display: flex
+  flex-direction: column
+  button
+    margin-bottom: .5rem
 </style>
 

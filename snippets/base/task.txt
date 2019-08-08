@@ -1,0 +1,17 @@
+gulp.task('clean', function() {
+log('Clean destination directories.')
+return del([
+    /* add directories here */
+], {
+    force: true
+});
+});
+
+gulp.task('build', gulp.parallel(/* add tasks here */), () => {});
+gulp.task('watch', gulp.series(gulp.parallel(/* add tasks here */), function watch () {
+    log('Start watching...');
+}));
+
+gulp.task('default', gulp.series('clean', 'watch'), function() {
+    log('Start build for '+env);
+});

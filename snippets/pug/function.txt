@@ -1,0 +1,8 @@
+function templates(filestream, destination) {
+    return filestream
+    .pipe($.pug())
+    .pipe($.rename({
+        extname: ".twig"
+    }))
+    .pipe(gulp.dest(destination))
+}
