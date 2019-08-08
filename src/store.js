@@ -28,7 +28,6 @@ export default new Vuex.Store({
     },
     config: (state, config) => {
       state.config = config
-      console.log(state.config)
     }
   },
   getters: {
