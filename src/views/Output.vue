@@ -6,7 +6,13 @@
         h3 development dependencies
         CodeSnippet(:snippet='listPackages(development, true)' language='shell')
       h2 gulpfile
-      CodeSnippet(:snippet='gulpfile' language='js')
+      v-btn(class='white--text' color='teal' @click='overlay = !overlay') Show gulpfile
+      v-btn(class='mx-2' v-clipboard:copy='gulpfile')
+        v-icon mdi-content-copy
+        | Copy gulpfile
+      v-overlay(:z-index='zIndex' :value='overlay')
+        v-btn(class='white--text' color='teal' @click='overlay = false') Close
+        CodeSnippet(:snippet='gulpfile' language='js')
 </template>
 
 <script>
@@ -18,7 +24,9 @@ import snippets from '../assets/snippets'
 export default {
   data() {
     return {
-      snippets: snippets
+      snippets: snippets,
+      overlay: false,
+      zIndex: 5,
     }
   },
   components: {
@@ -112,5 +120,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+button
+  i
+    margin-right: .5rem
 </style>
