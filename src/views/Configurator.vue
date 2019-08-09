@@ -9,12 +9,12 @@ v-container
         v-radio(label="Craft 3" value="3")
     .group
       h2 Components
-      v-checkbox(v-model="config.pug" label="Templates (pug)")
-      v-checkbox(v-model="config.sass" label="Style (sass)")
-      v-checkbox(v-model="config.script" label="JavaScript")
-      v-checkbox(v-model="config.img" label="Images")
-      v-checkbox(v-model="config.twig" label="Twig (XML)")
-      v-checkbox(v-model="config.email" label="E-Mail")
+      v-checkbox(v-model="config.components" label="Templates (pug)" value="pug")
+      v-checkbox(v-model="config.components" label="Style (sass)" value="sass")
+      v-checkbox(v-model="config.components" label="JavaScript" value="js")
+      v-checkbox(v-model="config.components" label="Images" vaue="img")
+      v-checkbox(v-model="config.components" label="Twig (XML)" vaue="twig")
+      v-checkbox(v-model="config.components" label="E-Mail" vaue="mail")
     .group
       h2 Features
       v-checkbox(v-model="config.foundation" label="Foundation Sites")
@@ -40,16 +40,11 @@ export default {
     return {
       config: {
         craft: '3',
-        pug: false,
-        sass: false,
-        script: false,
-        img: false,
-        twig: false,
-        email: false,
+        components: [],
         foundation: false,
         fontawesome: false,
         styleguide: false,
-        files: '1'
+        files: '1',
       },
       generated: ''
     }
