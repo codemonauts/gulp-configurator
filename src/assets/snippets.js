@@ -17,6 +17,16 @@ export default {
                 development: []
             },
             snippets: ['function', 'task', 'watch'],
+            notes: {
+                task: {
+                    line: 2,
+                    note: 'destination directory for craft 2: ../craft/templates'
+                },
+                watch: {
+                    line: 11,
+                    note: 'destination directory for craft 2: ../craft/templates'
+                }
+            },
             directory: '"../templates/**/*"'
         },
         {
