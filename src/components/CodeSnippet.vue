@@ -1,7 +1,7 @@
 <template lang="pug">
 .snippet
-  pre(:class="'language-'+language")
-    code {{snippet}}
+  pre(:data-line="highlight" :class="{'line-numbers' : lineNumbers}")
+    code(:class="'language-'+language") {{snippet}}
     .buttons
       v-btn(class="mx-2" fab small v-clipboard:copy="snippet")
         v-icon mdi-content-copy
@@ -10,8 +10,12 @@
 </template>
 
 <script>
+  import Prism from 'prismjs';
 export default {
-  props: ['snippet', 'language', 'history']
+  props: ['snippet', 'language', 'history', 'highlight', 'lineNumbers'],
+  mounted(){
+    Prism.highlightAll();
+  }
 }
 </script>
 

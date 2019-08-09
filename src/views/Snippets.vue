@@ -17,7 +17,8 @@
               CodeSnippet(:snippet='listPackages(tab.packages.development, true)' language='shell')
           .snippets(v-for='snippet in tab.snippets')
             h3 {{snippet}}
-            CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet)' language='js' :history='githubHistoryUrl(tab.type, snippet)')
+            v-alert(border='left' dense text colored-border color='blue' v-if='getNotes(tab, snippet)') {{ getNotes(tab, snippet).note }}
+            CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet)' language='javascript' :history='githubHistoryUrl(tab.type, snippet)' :highlight='getNotes(tab, snippet) ? getNotes(tab, snippet).line : ""' lineNumbers="true")
 
 </template>
 
@@ -48,6 +49,13 @@ export default {
     },
     listPackages(packages, dev=false) {
       return utils.listPackages(packages, dev)
+    },
+    getNotes(tab, part) {
+      if(tab.hasOwnProperty('notes')) {
+        if(tab.notes.hasOwnProperty(part)) {
+          return tab.notes[part]
+        }
+      }
     }
   }
 };

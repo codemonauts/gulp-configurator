@@ -27,6 +27,12 @@ export default {
                 development: ['gulp-sourcemaps']
             },
             snippets: ['import', 'function', 'task', 'watch'],
+            notes: {
+                watch: {
+                    line: '3',
+                    note: 'if using functions.js call sass-function with functions.sass(...)'
+                }
+            },
             directory: '"../public/css/**/*"'
         },
         {
