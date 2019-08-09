@@ -1,8 +1,8 @@
-var jswatcher = watcher(['js/**/*.js']);
-jswatcher.on('change', function(path, stat){
-    script(['../public/js']).pipe($.plumber({ errorHandler: onError }))
+var sasswatcher = watcher(['sass/**/*.sass']);
+sasswatcher.on('change', function(path, stat){
+    functions.sass(gulp.src('sass/styles.sass').pipe($.plumber({ errorHandler: onError })), ['../public/css'])
         .on('end', function() {
-            log('...re-scripted');
+            log('...re-sassed');
         })
         .pipe($.dockerNotify('Build completed', path));
 });
