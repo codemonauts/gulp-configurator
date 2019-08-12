@@ -9,7 +9,7 @@ v-container
           | &nbsp; projects with following directory structure:
         v-treeview(v-model="tree" :open="open" :items="items" item-key="name" open-on-click)
           template(v-slot:prepend="{ item, open }")
-            v-icon(v-if="!item.file")
+            v-icon(v-if="!item.file" :color='item.color')
               | {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
             v-icon(v-else)
               | {{ files[item.file] }}
@@ -18,6 +18,12 @@ v-container
           | &nbsp; and &nbsp;
           code gulp.dest(…)
           | &nbsp; functions.
+        p Files will be loaded from the src-directory, processed and the results copied to the same colored destination directories in public and templates.
+        p On each snippet tab and the generated output you'll find &nbsp;
+          code npm install
+          | &nbsp; commands for installing all necessary dependencies and development dependencies. Copy the command into your clipboard via the &nbsp;
+          v-icon mdi-content-copy
+          | -button.
 </template>
 
 <script>
@@ -41,9 +47,11 @@ export default {
           children: [
             {
               name: 'css',
+              color: 'blue'
             },
             {
               name: 'js',
+              color: 'green'
             }
           ]
         },
@@ -52,12 +60,15 @@ export default {
           children: [
             {
               name: 'pug',
+              color: 'orange'
             },
             {
               name: 'sass',
+              color: 'blue'
             },
             {
               name: 'js',
+              color: 'green'
             },
             {
               name: 'gulpfile.js',
@@ -71,6 +82,7 @@ export default {
         },
         {
           name: 'templates',
+          color: 'orange'
         },
         {
           name: 'composer.json',
