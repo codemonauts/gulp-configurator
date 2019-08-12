@@ -18,12 +18,22 @@ v-container
           | &nbsp; and &nbsp;
           code gulp.dest(…)
           | &nbsp; functions.
+        p Local development of the project is done with a &nbsp;
+          a(href='https://github.com/codemonauts/docker-craft-cms-dev-env') docker container
+          | &nbsp; that serves the website on &nbsp;
+          code localhost:8080
+          |. For development without the docker container you need to implement your own local server, e.g. with browser-sync, and the gulp-docker-notify dependency as well as the corresponding functions are obsolete.
         p Files will be loaded from the src-directory, processed and the results copied to the same colored destination directories in public and templates.
         p On each snippet tab and the generated output you'll find &nbsp;
           code npm install
           | &nbsp; commands for installing all necessary dependencies and development dependencies. Copy the command into your clipboard via the &nbsp;
           v-icon mdi-content-copy
           | -button.
+        p The gulpfile provides two main tasks: default and build. Please run &nbsp;
+          code gulp
+          | &nbsp; for local development, which cleans all destination directories and starts the watch task. For production deployment run &nbsp;
+          code gulp build
+          |.
 </template>
 
 <script>
