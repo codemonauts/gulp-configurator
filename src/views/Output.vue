@@ -8,18 +8,15 @@
           .group(v-if='output.development.length')
             h3 development dependencies
             CodeSnippet(:snippet='listPackages(output.development, true)' language='shell')
-          h2 gulpfile
-          v-btn(class='white--text' color='teal' @click='overlay = !overlay') Show gulpfile
-          v-btn(class='mx-2' v-clipboard:copy='output.gulpfile')
-            v-icon mdi-content-copy
-            | Copy gulpfile
-          v-overlay(:z-index='zIndex' :value='overlay')
-            v-btn(class='white--text' color='teal' @click='overlay = false') Close
-            CodeSnippet(:snippet='output.gulpfile' language='js')
+          OverlaySnippet(name='gulpfile' :snippet='output.gulpfile' language='js')
+          OverlaySnippet(name='javascript' :snippet='output.more.script' v-if='output.more.script' language='js')
+          OverlaySnippet(name='style' :snippet='output.more.style' v-if='output.more.style' language='sass')
+
 </template>
 
 <script>
 import CodeSnippet from '../components/CodeSnippet'
+import OverlaySnippet from '../components/OverlaySnippet'
 import utils from '../utils'
 import { mapGetters } from 'vuex'
 import snippets from '../assets/snippets'
@@ -33,7 +30,8 @@ export default {
     }
   },
   components: {
-    CodeSnippet
+    CodeSnippet,
+    OverlaySnippet
   },
   computed: {
     ...mapGetters(['config', 'getSnippet']),
@@ -64,6 +62,7 @@ export default {
         if(!directories.includes(tab.directory)) {
           directories.push(tab.directory)
         }
+
       })
 
       var gulpfile = base.replace('/* * * IMPORTS * * */', content.import) + '\n'
@@ -71,7 +70,7 @@ export default {
       gulpfile += content.task + '\n'
       gulpfile += basetasks.replace("/* * * WATCHERS * * */", content.watch).replace('/* add directories here */', directories)
 
-      return { gulpfile: gulpfile, packages: packages, development: development }
+      return { gulpfile: gulpfile, packages: packages, development: development, more: { 'script': content.script, 'style': content.style } }
     }
   },
   methods: {

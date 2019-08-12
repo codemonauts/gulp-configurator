@@ -43,7 +43,6 @@ export default {
       config: {
         craft: '3',
         components: [],
-        foundation: false,
         fontawesome: false,
         styleguide: false,
         files: '1',
