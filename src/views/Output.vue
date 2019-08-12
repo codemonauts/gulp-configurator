@@ -1,18 +1,21 @@
 <template lang="pug">
     v-container
-      h2 packages
-      CodeSnippet(:snippet='listPackages(output.packages)' language='shell')
-      .group(v-if='output.development.length')
-        h3 development dependencies
-        CodeSnippet(:snippet='listPackages(output.development, true)' language='shell')
-      h2 gulpfile
-      v-btn(class='white--text' color='teal' @click='overlay = !overlay') Show gulpfile
-      v-btn(class='mx-2' v-clipboard:copy='output.gulpfile')
-        v-icon mdi-content-copy
-        | Copy gulpfile
-      v-overlay(:z-index='zIndex' :value='overlay')
-        v-btn(class='white--text' color='teal' @click='overlay = false') Close
-        CodeSnippet(:snippet='output.gulpfile' language='js')
+      v-layout
+        v-flex
+          .packages(v-if='output.packages.length || output.development.length')
+            h2 packages
+            CodeSnippet(:snippet='listPackages(output.packages)' language='shell' v-if='output.packages.length')
+          .group(v-if='output.development.length')
+            h3 development dependencies
+            CodeSnippet(:snippet='listPackages(output.development, true)' language='shell')
+          h2 gulpfile
+          v-btn(class='white--text' color='teal' @click='overlay = !overlay') Show gulpfile
+          v-btn(class='mx-2' v-clipboard:copy='output.gulpfile')
+            v-icon mdi-content-copy
+            | Copy gulpfile
+          v-overlay(:z-index='zIndex' :value='overlay')
+            v-btn(class='white--text' color='teal' @click='overlay = false') Close
+            CodeSnippet(:snippet='output.gulpfile' language='js')
 </template>
 
 <script>
@@ -41,8 +44,9 @@ export default {
       var directories = []
       var content = {}
 
-      var packages = []
-      var development = []
+      var basetab = this.getTab('base')
+      var packages = basetab.packages.dependencies
+      var development = basetab.packages.development
 
       this.config.components.forEach((comp) => {
         var tab = this.getTab(comp)
