@@ -33,6 +33,7 @@ export default {
       files: {
         js: 'mdi-nodejs',
         json: 'mdi-json',
+        sass: 'mdi-sass',
       },
       tree: [],
       items: [
@@ -58,6 +59,27 @@ export default {
         {
           name: 'src',
           children: [
+            {
+              name: 'email',
+              children: [
+                {
+                  name: 'pug'
+                },
+                {
+                  name: 'sass',
+                  children: [
+                    {
+                      name: 'styles.sass',
+                      file: 'sass'
+                    },
+                    {
+                      name: 'fonts.sass',
+                      file: 'sass'
+                    },
+                  ]
+                },
+              ]
+            },
             {
               name: 'twig',
               color: 'orange'

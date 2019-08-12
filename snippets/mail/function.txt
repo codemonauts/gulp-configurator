@@ -1,0 +1,37 @@
+function mail() {
+    if(isDevelopment()) {
+        return gulp.src('email/pug/**/*.pug')
+            .pipe($.pug())
+            .pipe(inky())
+            .pipe($.htmlsplit())
+            .pipe($.rename({
+                extname: ".twig"
+            }))
+            .pipe($.replace('<link rel="stylesheet" type="text/css" href="../../../public/css/email.css">', '<link rel="stylesheet" type="text/css" href="/css/email.css">'))
+            .pipe(gulp.dest('../templates/email'));
+    } else {
+        var css = fs.readFileSync('../public/css/email.css').toString();
+        var fonts = fs.readFileSync('../public/css/fonts.css').toString();
+        var mqCss = siphon(css);
+        return gulp.src('email/pug/**/*.pug')
+            .pipe($.pug())
+            .pipe(inky())
+            .pipe($.inlineCss({
+                applyStyleTags: false,
+                removeStyleTags: true,
+                preserveMediaQueries: true,
+                removeLinkTags: false
+            }))
+            .pipe($.replace('<!--<style>-->', `<style>${fonts}${mqCss}</style>`))
+            .pipe($.replace('<link rel="stylesheet" type="text/css" href="../../../public/css/email.css">', ''))
+            .pipe($.htmlmin({
+                collapseWhitespace: true,
+                minifyCSS: true
+            }))
+            .pipe($.htmlsplit())
+            .pipe($.rename({
+                extname: ".twig"
+            }))
+            .pipe(gulp.dest('../templates/email'));
+    }
+}

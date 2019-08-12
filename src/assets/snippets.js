@@ -74,6 +74,16 @@ export default {
             },
             snippets: ['function', 'task', 'watch'],
             directory: '"../templates/**/*"'
+        },
+        {
+            title: 'E-Mail',
+            type: 'mail',
+            packages: {
+                dependencies: ['foundation-emails', 'gulp-htmlsplit', 'gulp-htmlmin', 'gulp-inline-css', 'gulp-rename', 'gulp-replace', 'inky', 'siphon-media-query'],
+                development: []
+            },
+            snippets: ['import', 'function', 'task', 'watch'],
+            directory: '"../templates/**/*"'
         }
     ]
 }

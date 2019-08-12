@@ -1,0 +1,17 @@
+var emailpugwatcher = watcher(['email/pug/**/*.pug']);
+emailpugwatcher.on('change', function (path, stat) {
+    functions.mail()
+        .on('end', function() {
+            log('...re-mailed');
+        })
+        .pipe($.dockerNotify('Build completed', path));
+});
+
+var emailsasswatcher = watcher(['email/sass/**/*.sass']);
+emailsasswatcher.on('change', function (path, stat) {
+    functions.sass(gulp.src('email/sass/**/*.sass', { base: 'email/sass/' }), gulp.dest('../public/css'))
+        .on('end', function() {
+            log('...mail re-sassed');
+        })
+        .pipe($.dockerNotify('Build completed', path));
+});

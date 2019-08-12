@@ -1,0 +1,4 @@
+gulp.task('email', gulp.series(
+    function() { return sass(gulp.src('email/sass/**/*.sass'), gulp.dest('../public/css')); },
+    function() { return mail(); }
+));
