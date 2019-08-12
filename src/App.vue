@@ -17,6 +17,9 @@
     v-content
       v-alert(dense dismissible type='error' v-if='error') Error while retrieving snippets from GitHub.
       router-view
+    v-footer
+      v-flex(xs12 text-center) &copy; {{ new Date().getFullYear() }} &nbsp;
+        img(src='./assets/codemonauts-logo.svg' alt='codemonauts logo')
 </template>
 
 <script>
