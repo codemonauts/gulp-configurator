@@ -15,6 +15,7 @@ The configurator form allows you to preselect all features for the new project a
 ### Libraries
 - UI Components: [Vuetify](https://vuetifyjs.com)
 - Code Highlighting: [Prism.js](https://prismjs.com/index.html) (Config via [babel-plugin-prismjs](https://github.com/mAAdhaTTah/babel-plugin-prismjs))
+- Copy to Clipboard: [vue-clipboard2](https://github.com/Inndy/vue-clipboard2)
 
 ### Project setup
 - setup: `yarn install`
