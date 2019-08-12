@@ -1,0 +1,9 @@
+var twigwatcher = watcher(['twig/**/*.*']);
+twigwatcher.on('change', function(path, stat){
+    var dir = path.substr(4, path.lastIndexOf('/')-4)
+    functions.copy(path, dir)
+        .on('end', function() {
+            log('...files copied');
+        })
+        .pipe($.dockerNotify('Files copied', path));
+});

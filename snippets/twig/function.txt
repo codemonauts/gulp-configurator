@@ -1,0 +1,4 @@
+function copy(path, dir) {
+    return gulp.src(path)
+        .pipe(gulp.dest('../templates/'+dir));
+}

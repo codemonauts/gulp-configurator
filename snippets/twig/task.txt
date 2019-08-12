@@ -1,0 +1,3 @@
+gulp.task('templates', function() {
+    return functions.copy('twig/**/*', '');
+});

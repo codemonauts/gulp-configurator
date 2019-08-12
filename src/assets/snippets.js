@@ -64,6 +64,16 @@ export default {
             },
             snippets: ['function', 'task', 'watch'],
             directory: '"../public/img/**/*"'
+        },
+        {
+            title: 'Twig (XML)',
+            type: 'twig',
+            packages: {
+                dependencies: [],
+                development: []
+            },
+            snippets: ['function', 'task', 'watch'],
+            directory: '"../templates/**/*"'
         }
     ]
 }

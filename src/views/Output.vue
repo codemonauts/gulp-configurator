@@ -61,7 +61,9 @@ export default {
             content[snippet] = this.getSnippet({'type': comp, 'part': snippet}) + '\n'
           }
         })
-        directories.push(tab.directory)
+        if(!directories.includes(tab.directory)) {
+          directories.push(tab.directory)
+        }
       })
 
       var gulpfile = base.replace('/* * * IMPORTS * * */', content.import) + '\n'
