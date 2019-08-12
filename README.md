@@ -1,4 +1,5 @@
 # gulp-configurator
+[![Codeship Status for codemonauts/gulp-configurator](https://app.codeship.com/projects/9a0c1390-9f33-0137-b033-2efe84715670/status?branch=master)](https://app.codeship.com/projects/359316)
 
 Looking for the same gulp snippets over and over again? Copying the gulpfile from project to project?
 This app provides help for both those scenarios:
