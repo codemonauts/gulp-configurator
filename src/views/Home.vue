@@ -59,6 +59,10 @@ export default {
           name: 'src',
           children: [
             {
+              name: 'twig',
+              color: 'orange'
+            },
+            {
               name: 'pug',
               color: 'orange'
             },
