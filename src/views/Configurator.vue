@@ -19,7 +19,7 @@ v-container
           v-checkbox(v-model="config.components" label="E-Mail" value="mail")
         .group
           h2 Features
-          v-checkbox(v-model="config.foundation" label="Foundation Sites")
+          v-checkbox(v-model="config.components" label="Foundation Sites" value="foundation")
           v-checkbox(v-model="config.fontawesome" label="FontAwesome")
           v-checkbox(v-model="config.styleguide" label="Styleguide")
         .group

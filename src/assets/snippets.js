@@ -84,6 +84,22 @@ export default {
             },
             snippets: ['import', 'function', 'task', 'watch'],
             directory: '"../templates/**/*"'
+        },
+        {
+            title: 'Foundation',
+            type: 'foundation',
+            packages: {
+                dependencies: ['foundation-sites', 'jquery', 'what-input'],
+                development: []
+            },
+            snippets: ['script', 'style'],
+            directory: '',
+            notes: {
+                style: {
+                    line: '1-2',
+                    note: 'copy the _settings.scss from node_modules/foundation-sites/scss/settings/ as _foundation-settings.scss into your sass directory and change the util-import to @import \'../node_modules/foundation-sites/scss/util/util\'; either load all styles for the foundation components or adjust CSS output, see: https://foundation.zurb.com/sites/docs/sass.html'
+                }
+            },
         }
     ]
 }
