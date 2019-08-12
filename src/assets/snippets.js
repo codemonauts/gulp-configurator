@@ -54,6 +54,16 @@ export default {
             },
             snippets: ['import', 'function', 'task', 'watch'],
             directory: '"../public/js/**/*"'
+        },
+        {
+            title: 'Images',
+            type: 'img',
+            packages: {
+                dependencies: [],
+                development: []
+            },
+            snippets: ['function', 'task', 'watch'],
+            directory: '"../public/img/**/*"'
         }
     ]
 }

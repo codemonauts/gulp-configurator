@@ -1,0 +1,3 @@
+gulp.task('img', function() {
+    return imagine(['img/**/*'], '../public/img');
+});

@@ -1,0 +1,4 @@
+function imagine(file, destination) {
+    return gulp.src(file)
+        .pipe(gulp.dest(destination));
+}
