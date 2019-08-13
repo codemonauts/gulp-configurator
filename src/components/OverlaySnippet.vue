@@ -25,3 +25,8 @@ export default {
   },
 }
 </script>
+
+<style lang="sass">
+.v-overlay__content
+  max-width: 90vw
+</style>
