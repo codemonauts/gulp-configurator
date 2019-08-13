@@ -50,9 +50,9 @@ export default new Vuex.Store({
   actions: {
     retrieveSnippet({commit}, data) {
       axios
-          .get(utils.githubApiUrl(data.type, data.part))
+          .get(`/snippets/${data.type}/${data.part}.txt`)
           .then((response) => {
-              commit('snippet', {'type': data.type, 'part': data.part, 'code': atob(response.data.content)});
+              commit('snippet', {'type': data.type, 'part': data.part, 'code': response.data});
             }
           )
           .catch(() => {
