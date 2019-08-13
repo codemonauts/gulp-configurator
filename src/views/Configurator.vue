@@ -6,27 +6,27 @@ v-container
       v-form
         .group
           h2 Craft Version
-          v-radio-group(v-model="config.craft" row)
-            v-radio(label="Craft 2" value="2")
-            v-radio(label="Craft 3" value="3")
+          v-radio-group(v-model='config.craft' row)
+            v-radio(label='Craft 2' value='2')
+            v-radio(label='Craft 3' value='3')
         .group
           h2 Components
-          v-checkbox(v-model="config.components" label="Templates (pug)" value="pug")
-          v-checkbox(v-model="config.components" label="Style (sass)" value="sass")
-          v-checkbox(v-model="config.components" label="JavaScript" value="js")
-          v-checkbox(v-model="config.components" label="Images" value="img")
-          v-checkbox(v-model="config.components" label="Twig (XML)" value="twig")
-          v-checkbox(v-model="config.components" label="E-Mail" value="mail")
+          v-checkbox(v-model='config.components' label='Templates (pug)' value='pug')
+          v-checkbox(v-model='config.components' label='Style (sass)' value='sass')
+          v-checkbox(v-model='config.components' label='JavaScript' value='js')
+          v-checkbox(v-model='config.components' label='Images' value='img')
+          v-checkbox(v-model='config.components' label='Twig (XML)' value='twig')
+          v-checkbox(v-model='config.components' label='E-Mail' value='mail')
         .group
           h2 Features
-          v-checkbox(v-model="config.components" label="Foundation Sites" value="foundation")
-          v-checkbox(v-model="config.fontawesome" label="FontAwesome")
-          v-checkbox(v-model="config.styleguide" label="Styleguide")
+          v-checkbox(v-model='config.components' label='Foundation Sites' value='foundation')
+          v-checkbox(v-model='config.fontawesome' label='FontAwesome')
+          v-checkbox(v-model='config.styleguide' label='Styleguide')
         .group
           h2 Architecture
-          v-radio-group(v-model="config.files" row)
-            v-radio(label="gulpfile" value="1" selected)
-            v-radio(label="gulpfile + functions" value="2")
+          v-radio-group(v-model='config.files' row)
+            v-radio(label='gulpfile' value='1' selected)
+            v-radio(label='gulpfile + functions' value='2')
         .group
           v-btn(@click='generate') Generate!
 </template>
@@ -43,11 +43,8 @@ export default {
       config: {
         craft: '3',
         components: [],
-        fontawesome: false,
-        styleguide: false,
         files: '1',
-      },
-      generated: ''
+      }
     }
   },
   methods: {
