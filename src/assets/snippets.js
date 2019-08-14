@@ -18,14 +18,14 @@ export default {
             },
             snippets: ['function', 'task', 'watch'],
             notes: {
-                task: {
+                task: [{
                     line: 2,
                     note: 'destination directory for craft 2: ../craft/templates'
-                },
-                watch: {
+                }],
+                watch: [{
                     line: 11,
                     note: 'destination directory for craft 2: ../craft/templates'
-                }
+                }]
             },
             directory: '"../templates/**/*"'
         },
@@ -38,10 +38,10 @@ export default {
             },
             snippets: ['import', 'function', 'task', 'watch'],
             notes: {
-                watch: {
+                watch: [{
                     line: '3',
                     note: 'if using functions.js call sass-function with functions.sass(...)'
-                }
+                }]
             },
             directory: '"../public/css/**/*"'
         },
@@ -95,10 +95,14 @@ export default {
             snippets: ['script', 'style'],
             directory: '',
             notes: {
-                style: {
-                    line: '1-2',
-                    note: 'copy the _settings.scss from node_modules/foundation-sites/scss/settings/ as _foundation-settings.scss into your sass directory and change the util-import to @import \'../node_modules/foundation-sites/scss/util/util\'; either load all styles for the foundation components or adjust CSS output, see: https://foundation.zurb.com/sites/docs/sass.html'
-                }
+                style: [{
+                    line: '1',
+                    note: 'copy the _settings.scss from node_modules/foundation-sites/scss/settings/ as _foundation-settings.scss into your sass directory and change the util-import to @import \'../node_modules/foundation-sites/scss/util/util\';'
+                },
+                {
+                    line: '2',
+                    note: 'either load all styles for the foundation components or adjust CSS output, see: https://foundation.zurb.com/sites/docs/sass.html'
+                }]
             },
         }
     ]
