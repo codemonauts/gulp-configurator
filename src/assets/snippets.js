@@ -27,7 +27,8 @@ export default {
                     note: 'destination directory for craft 2: ../craft/templates'
                 }]
             },
-            directory: '"../templates/**/*"'
+            directory: '"../templates/**/*"',
+            task: 'templates'
         },
         {
             title: 'Styles (sass)',
@@ -43,7 +44,8 @@ export default {
                     note: 'if using functions.js call sass-function with functions.sass(...)'
                 }]
             },
-            directory: '"../public/css/**/*"'
+            directory: '"../public/css/**/*"',
+            task: 'sass'
         },
         {
             title: 'JavaScript',
@@ -53,7 +55,8 @@ export default {
                 development: ['gulp-sourcemaps']
             },
             snippets: ['import', 'function', 'task', 'watch'],
-            directory: '"../public/js/**/*"'
+            directory: '"../public/js/**/*"',
+            task: 'js'
         },
         {
             title: 'Images',
@@ -63,7 +66,8 @@ export default {
                 development: []
             },
             snippets: ['function', 'task', 'watch'],
-            directory: '"../public/img/**/*"'
+            directory: '"../public/img/**/*"',
+            task: 'img'
         },
         {
             title: 'Twig (XML)',
@@ -73,7 +77,8 @@ export default {
                 development: []
             },
             snippets: ['function', 'task', 'watch'],
-            directory: '"../templates/**/*"'
+            directory: '"../templates/**/*"',
+            task: 'twig'
         },
         {
             title: 'E-Mail',
@@ -83,7 +88,8 @@ export default {
                 development: []
             },
             snippets: ['import', 'function', 'task', 'watch'],
-            directory: '"../templates/**/*"'
+            directory: '"../templates/**/*"',
+            task: 'email'
         },
         {
             title: 'Foundation',

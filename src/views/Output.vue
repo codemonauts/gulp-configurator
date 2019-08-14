@@ -45,10 +45,12 @@ export default {
       var basetab = this.getTab('base')
       var packages = basetab.packages.dependencies
       var development = basetab.packages.development
+      var tasks = []
 
       this.config.components.forEach((comp) => {
         var tab = this.getTab(comp)
 
+        tasks.push(tab.task)
         packages = packages.concat(tab.packages.dependencies)
         development = development.concat(tab.packages.development)
 
@@ -68,7 +70,9 @@ export default {
       var gulpfile = base.replace('/* * * IMPORTS * * */', content.import) + '\n'
       gulpfile += content.function + '\n'
       gulpfile += content.task + '\n'
-      gulpfile += basetasks.replace("/* * * WATCHERS * * */", content.watch).replace('/* add directories here */', directories)
+      gulpfile += basetasks.replace("/* * * WATCHERS * * */", content.watch)
+                            .replace('/* add directories here */', directories)
+                            .replace(/\/\* add tasks here \*\//g, tasks)
 
       return { gulpfile: gulpfile, packages: packages, development: development, more: { 'script': content.script, 'style': content.style } }
     }
