@@ -1,6 +1,6 @@
 var emailpugwatcher = watcher(['email/pug/**/*.pug']);
 emailpugwatcher.on('change', function (path, stat) {
-    functions.mail()
+    mail()
         .on('end', function() {
             log('...re-mailed');
         })
@@ -9,7 +9,7 @@ emailpugwatcher.on('change', function (path, stat) {
 
 var emailsasswatcher = watcher(['email/sass/**/*.sass']);
 emailsasswatcher.on('change', function (path, stat) {
-    functions.sass(gulp.src('email/sass/**/*.sass', { base: 'email/sass/' }), gulp.dest('../public/css'))
+    sass(gulp.src('email/sass/**/*.sass', { base: 'email/sass/' }), gulp.dest('../public/css'))
         .on('end', function() {
             log('...mail re-sassed');
         })

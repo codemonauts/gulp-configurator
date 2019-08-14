@@ -1,7 +1,7 @@
 var imgwatcher = watcher(['img/**/*.*']);
 imgwatcher.on('add', function(path, stat){
     var dir = path.substr(3, path.lastIndexOf('/')-3)
-    functions.imagine(path, '../public/img' + dir)
+    imagine(path, '../public/img' + dir)
         .on('end', function() {
             log('...public re-imagined');
         })
