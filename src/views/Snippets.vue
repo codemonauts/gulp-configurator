@@ -20,7 +20,7 @@
               .snippets(v-for='snippet in tab.snippets')
                 h3 {{snippet}}
                 .notes(v-if='getNotes(tab, snippet)')
-                  v-alert(border='left' dense text colored-border color='blue' v-for='note in getNotes(tab, snippet)')
+                  v-alert(border='left' dense text colored-border color='blue' v-for='note in getNotes(tab, snippet)' v-bind:key='note.line')
                     strong line {{ note.line }}
                     br
                     | {{ note.note }}
