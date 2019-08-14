@@ -1,5 +1,5 @@
 <template lang="pug">
-    v-tabs
+    v-tabs(show-arrows)
       v-tab(v-for="tab in snippets.tabs" :key='tab.type') {{tab.title}}
       v-tab-item(v-for="tab in snippets.tabs" :key='tab.type')
         v-container
