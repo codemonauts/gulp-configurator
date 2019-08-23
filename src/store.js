@@ -3,14 +3,15 @@ import Vuex from 'vuex'
 
 import axios from 'axios'
 
-import utils from './utils'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     snippets: {},
-    error: false,
+    notification: {
+      type: '',
+      message: ''
+    } ,
     config: {}
   },
   mutations: {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     config: (state, config) => {
       state.config = config
+    },
+    notification: (state, notification) => {
+      state.notification = notification
     }
   },
   getters: {
@@ -40,8 +44,8 @@ export default new Vuex.Store({
         return 'not available'
       }
     },
-    error: (state) => {
-      return state.error
+    notification: (state) => {
+      return state.notification
     },
     config: (state) => {
       return state.config
@@ -56,11 +60,14 @@ export default new Vuex.Store({
             }
           )
           .catch(() => {
-            commit('error', true)
+            commit('notification', {'type': 'error', 'message': 'Error while retrieving snippets from server.'})
           })
     },
     setConfig({commit}, data) {
       commit('config', data)
+    },
+    notification({commit}, data) {
+      commit('notification', data)
     }
   }
 })

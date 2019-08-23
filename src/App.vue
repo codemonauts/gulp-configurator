@@ -15,7 +15,7 @@
         span.mr-2 Repository
 
     v-content
-      v-alert(dense dismissible type='error' v-if='error') Error while retrieving snippets from GitHub.
+      v-alert(dense dismissible :type='notification.type' v-if='notification.message') {{notification.message}}
       router-view
     v-footer
       v-flex(xs12 text-center) &copy; {{ new Date().getFullYear() }} &nbsp;
@@ -34,7 +34,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['error'])
+    ...mapGetters(['notification'])
   },
   mounted() {
     snippets.tabs.forEach((tab) => {
