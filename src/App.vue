@@ -39,7 +39,7 @@ export default {
   mounted() {
     snippets.tabs.forEach((tab) => {
       tab.snippets.forEach((part) => {
-        this.$store.dispatch('retrieveSnippet', {'type': tab.type, 'part': part})
+        this.$store.dispatch('retrieveSnippet', {'type': tab.type, 'part': part.part})
       })
     })
   }

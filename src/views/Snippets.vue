@@ -18,13 +18,13 @@
                     li(v-for="p in tab.packages.development") {{p}}
                   CodeSnippet(:snippet='listPackages(tab.packages.development, true)' language='shell')
               .snippets(v-for='snippet in tab.snippets')
-                h3 {{snippet}}
-                .notes(v-if='getNotes(tab, snippet)')
-                  v-alert(border='left' dense text colored-border color='blue' v-for='note in getNotes(tab, snippet)' v-bind:key='note.line')
+                h3 {{snippet.part}}
+                .notes(v-if='getNotes(tab, snippet.part)')
+                  v-alert(border='left' dense text colored-border color='blue' v-for='note in getNotes(tab, snippet.part)' v-bind:key='note.line')
                     strong(v-if='note.line') line {{ note.line }}
                     br(v-if='note.line')
                     | {{ note.note }}
-                CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet)' language='javascript' :history='githubHistoryUrl(tab.type, snippet)' :highlight='getNotes(tab, snippet) ? getNotes(tab, snippet).map(note => note.line) : ""' lineNumbers="true")
+                CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet.part)' :language='snippet.lang' :history='githubHistoryUrl(tab.type, snippet.part)' :highlight='getNotes(tab, snippet.part) ? getNotes(tab, snippet.part).map(note => note.line) : ""' lineNumbers="true")
 
 </template>
 

@@ -7,7 +7,10 @@ export default {
                 dependencies: ['gulp@4.0.0', 'gulp-load-plugins', 'minimist', 'del'],
                 development: ['glob-watcher', 'fancy-log', 'beeper', 'gulp-plumber', 'gulp-docker-notify'],
             },
-            snippets: ['base', 'task']
+            snippets: [
+                {'part': 'base', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'}
+            ]
         },
         {
             title: 'Templates (pug)',
@@ -16,7 +19,11 @@ export default {
                 dependencies: ['gulp-pug', 'gulp-rename'],
                 development: []
             },
-            snippets: ['function', 'task', 'watch'],
+            snippets: [
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             notes: {
                 task: [{
                     line: 2,
@@ -37,7 +44,12 @@ export default {
                 dependencies: ['gulp-sass', 'autoprefixer', 'cssnano', 'gulp-postcss'],
                 development: ['gulp-sourcemaps']
             },
-            snippets: ['import', 'function', 'task', 'watch'],
+            snippets: [
+                {'part': 'import', 'lang': 'javascript'},
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             notes: {
                 watch: [{
                     line: '3',
@@ -54,7 +66,12 @@ export default {
                 dependencies: ['browserify', 'vinyl-source-stream', 'vinyl-buffer', 'babelify', 'gulp-uglify-es', '@babel/core', '@babel/preset-env'],
                 development: ['gulp-sourcemaps']
             },
-            snippets: ['import', 'function', 'task', 'watch'],
+            snippets: [
+                {'part': 'import', 'lang': 'javascript'},
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             directory: '"../public/js/**/*"',
             task: 'js'
         },
@@ -65,7 +82,11 @@ export default {
                 dependencies: [],
                 development: []
             },
-            snippets: ['function', 'task', 'watch'],
+            snippets: [
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             directory: '"../public/img/**/*"',
             task: 'img'
         },
@@ -76,7 +97,11 @@ export default {
                 dependencies: [],
                 development: []
             },
-            snippets: ['function', 'task', 'watch'],
+            snippets: [
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             directory: '"../templates/**/*"',
             task: 'twig'
         },
@@ -87,7 +112,12 @@ export default {
                 dependencies: ['foundation-emails', 'gulp-htmlsplit', 'gulp-htmlmin', 'gulp-inline-css', 'gulp-rename', 'gulp-replace', 'inky', 'siphon-media-query'],
                 development: []
             },
-            snippets: ['import', 'function', 'task', 'watch'],
+            snippets: [
+                {'part': 'import', 'lang': 'javascript'},
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             directory: '"../templates/**/*"',
             task: 'email'
         },
@@ -98,7 +128,10 @@ export default {
                 dependencies: ['foundation-sites', 'jquery', 'what-input'],
                 development: []
             },
-            snippets: ['script', 'style'],
+            snippets: [
+                {'part': 'script', 'lang': 'javascript'},
+                {'part': 'style', 'lang': 'sass'},
+            ],
             directory: '',
             notes: {
                 style: [{
@@ -118,7 +151,11 @@ export default {
                 dependencies: [],
                 development: []
             },
-            snippets: ['function', 'task', 'watch'],
+            snippets: [
+                {'part': 'function', 'lang': 'javascript'},
+                {'part': 'task', 'lang': 'javascript'},
+                {'part': 'watch', 'lang': 'javascript'}
+            ],
             directory: '"../public/fonts/**/*"',
         },
         {
@@ -128,7 +165,11 @@ export default {
                 dependencies: ['@fortawesome/fontawesome-pro'],
                 development: []
             },
-            snippets: ['additional', 'npmrc', 'style'],
+            snippets: [
+                {'part': 'additional', 'lang': 'javascript'},
+                {'part': 'npmrc', 'lang': 'shell'},
+                {'part': 'style', 'lang': 'sass'}
+            ],
             directory: '',
             notes: {
                 npmrc: [{

@@ -9,7 +9,7 @@
             h3 development dependencies
             CodeSnippet(:snippet='listPackages(output.development, true)' language='shell')
           OverlaySnippet(name='gulpfile' :snippet='output.gulpfile' language='js')
-          OverlaySnippet(v-for='(snippet, name) in output.more' :name='name' :snippet='snippet' language='js')
+          OverlaySnippet(v-for='(snippet, name) in output.more' :name='name' :snippet='snippet.snippet' :language='snippet.lang')
 </template>
 
 <script>
@@ -53,10 +53,13 @@ export default {
         development = development.concat(tab.packages.development)
 
         tab.snippets.forEach((snippet) => {
-          if(content.hasOwnProperty(snippet)) {
-            content[snippet] += this.getSnippet({'type': comp, 'part': snippet}) + '\n'
+          if(content.hasOwnProperty(snippet.part)) {
+            content[snippet.part.snippet] += this.getSnippet({'type': comp, 'part': snippet.part}) + '\n'
           } else {
-            content[snippet] = this.getSnippet({'type': comp, 'part': snippet}) + '\n'
+            content[snippet.part] = {
+              'snippet': this.getSnippet({'type': comp, 'part': snippet.part}) + '\n',
+              'lang': snippet.lang
+            }
           }
         })
         if(!directories.includes(tab.directory)) {
