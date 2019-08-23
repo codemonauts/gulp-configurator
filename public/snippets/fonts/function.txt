@@ -1,0 +1,4 @@
+function fonts(files, destination) {
+    return  gulp.src(files)
+                .pipe(gulp.dest('../public/fonts' + destination));
+}

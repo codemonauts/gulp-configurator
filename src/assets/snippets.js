@@ -110,6 +110,34 @@ export default {
                     note: 'either load all styles for the foundation components or adjust CSS output, see: https://foundation.zurb.com/sites/docs/sass.html'
                 }]
             },
+        },
+        {
+            title: 'Fonts',
+            type: 'fonts',
+            packages: {
+                dependencies: [],
+                development: []
+            },
+            snippets: ['function', 'task', 'watch'],
+            directory: '"../public/fonts/**/*"',
+        },
+        {
+            title: 'FontAwesome',
+            type: 'fontawesome',
+            packages: {
+                dependencies: ['@fortawesome/fontawesome-pro'],
+                development: []
+            },
+            snippets: ['additional', 'npmrc', 'style'],
+            directory: '',
+            notes: {
+                npmrc: [{
+                    note: 'put file as .npmrc into root source directory next to package.json and gulpfile'
+                }],
+                additional: [{
+                    note: 'add snippet to fonts function'
+                }]
+            },
         }
     ]
 }

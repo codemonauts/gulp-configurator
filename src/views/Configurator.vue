@@ -17,10 +17,11 @@ v-container
           v-checkbox(v-model='config.components' label='Images' value='img')
           v-checkbox(v-model='config.components' label='Twig (XML)' value='twig')
           v-checkbox(v-model='config.components' label='E-Mail' value='mail')
+          v-checkbox(v-model='config.components' label='Fonts' value='fonts' @change='checkFonts')
         .group
           h2 Features
           v-checkbox(v-model='config.components' label='Foundation Sites' value='foundation')
-          v-checkbox(v-model='config.fontawesome' label='FontAwesome')
+          v-checkbox(v-model='config.components' label='FontAwesome' value='fontawesome' @change='selectFonts')
           v-checkbox(v-model='config.styleguide' label='Styleguide')
         .group
           h2 Architecture
@@ -51,6 +52,18 @@ export default {
     generate() {
       this.$store.dispatch('setConfig', this.config)
       this.$router.push('output')
+    },
+    selectFonts() {
+      if(this.config.components.includes('fontawesome')) {
+        this.config.components.push('fonts')
+      }
+    },
+    checkFonts() {
+      if(this.config.components.includes('fontawesome') && !this.config.components.includes('fonts')) {
+        this.$store.dispatch('notification', {'type': 'warning', 'message': 'Fonts component needs to be selected for Fontawesome.'})
+      } else {
+        this.$store.dispatch('notification', {'type': '', 'message': ''})
+      }
     }
   }
 }

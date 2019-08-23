@@ -1,0 +1,8 @@
+var fontswatcher = watcher(['fonts/**/*.*']);
+fontswatcher.on('change', function(path, stat){
+    fonts(path, '')
+        .on('end', function() {
+            log('...re-fonted');
+        })
+        .pipe($.dockerNotify('Fonts copied', path));
+});

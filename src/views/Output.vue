@@ -9,9 +9,7 @@
             h3 development dependencies
             CodeSnippet(:snippet='listPackages(output.development, true)' language='shell')
           OverlaySnippet(name='gulpfile' :snippet='output.gulpfile' language='js')
-          OverlaySnippet(name='javascript' :snippet='output.more.script' v-if='output.more.script' language='js')
-          OverlaySnippet(name='style' :snippet='output.more.style' v-if='output.more.style' language='sass')
-
+          OverlaySnippet(v-for='(snippet, name) in output.more' :name='name' :snippet='snippet' language='js')
 </template>
 
 <script>
@@ -74,7 +72,10 @@ export default {
                             .replace('/* add directories here */', directories)
                             .replace(/\/\* add tasks here \*\//g, tasks)
 
-      return { gulpfile: gulpfile, packages: packages, development: development, more: { 'script': content.script, 'style': content.style } }
+      var defaultTasks = ['watch', 'import', 'function', 'task']
+      defaultTasks.forEach(e => delete content[e])
+
+      return { gulpfile: gulpfile, packages: packages, development: development, more: content }
     }
   },
   methods: {
