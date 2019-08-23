@@ -48,16 +48,19 @@ export default {
       this.config.components.forEach((comp) => {
         var tab = this.getTab(comp)
 
-        tasks.push(tab.task)
+        if(tab.task) {
+          tasks.push(tab.task)
+        }
         packages = packages.concat(tab.packages.dependencies)
         development = development.concat(tab.packages.development)
 
         tab.snippets.forEach((snippet) => {
-          if(content.hasOwnProperty(snippet.part)) {
-            content[snippet.part.snippet] += this.getSnippet({'type': comp, 'part': snippet.part}) + '\n'
+          let part = snippet.part
+          if(content.hasOwnProperty(part)) {
+            content[part]['snippet'] += this.getSnippet({'type': comp, 'part': part}) + '\n'
           } else {
-            content[snippet.part] = {
-              'snippet': this.getSnippet({'type': comp, 'part': snippet.part}) + '\n',
+            content[part] = {
+              'snippet': this.getSnippet({'type': comp, 'part': part}) + '\n',
               'lang': snippet.lang
             }
           }
@@ -68,12 +71,25 @@ export default {
 
       })
 
-      var gulpfile = base.replace('/* * * IMPORTS * * */', content.import) + '\n'
-      gulpfile += content.function + '\n'
-      gulpfile += content.task + '\n'
-      gulpfile += basetasks.replace("/* * * WATCHERS * * */", content.watch)
-                            .replace('/* add directories here */', directories)
-                            .replace(/\/\* add tasks here \*\//g, tasks)
+      var gulpfile = base
+      if(content.import) {
+        gulpfile = gulpfile.replace('/* * * IMPORTS * * */', content.import.snippet) + '\n'
+      }
+      if(content.function) {
+        gulpfile += content.function.snippet + '\n'
+      }
+      if(content.task) {
+        gulpfile += content.task.snippet + '\n'
+      }
+      if(content.watch) {
+        gulpfile += basetasks.replace("/* * * WATCHERS * * */", content.watch.snippet)
+      }
+      if(directories.length) {
+        gulpfile = gulpfile.replace('/* add directories here */', directories)
+      }
+      if(tasks.length) {
+        gulpfile = gulpfile.replace(/\/\* add tasks here \*\//g, tasks)
+      }
 
       var defaultTasks = ['watch', 'import', 'function', 'task']
       defaultTasks.forEach(e => delete content[e])
