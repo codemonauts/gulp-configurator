@@ -1,0 +1,274 @@
+const fs = require('fs');
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+var log = require('fancy-log');
+
+var del = require('del');
+
+// * * * * MALVID
+const malvid = require('malvid');
+const pAll = require('p-all');
+const continuousStealthyRequire = require('continuous-stealthy-require');
+const util = require('util');
+
+var path = require('path');
+
+var env = require('minimist')(process.argv.slice(2))._[0] || 'development';
+
+var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano');
+
+var functions = require('./functions.js');
+
+var isDevelopment = function() {
+    return (env === 'development');
+};
+var isProduction = function () {
+    return !isDevelopment();
+};
+
+function getFolders(dir) {
+    return fs.readdirSync(dir)
+        .filter(function(file) {
+            return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+}
+
+// create html layout for component iframes
+function layoutTemplates() {
+    return gulp.src(['pug/components.pug', 'pug/base.pug'])
+        .pipe($.pug())
+        .pipe($.rename({
+            extname: ".twig"
+        }))
+        .pipe(gulp.dest('../styleguide/'))
+        .pipe($.twig())
+        .pipe(gulp.dest('../styleguide/'));
+}
+
+function macrosTemplates() {
+    return gulp.src('pug/_macros/*.pug')
+        .pipe($.pug())
+        .pipe($.rename({
+            extname: ".twig"
+        }))
+        .pipe(gulp.dest('../styleguide/_macros/'));
+}
+
+// scan all component dirs to process singles
+function pageComponents(){
+    var types = ['_components/atoms', '_components/pages', '_components/article', '_components/layout',  '_components/singles', 'base']
+    types.map(function(type){
+        var folders = getFolders(type)
+        folders.map(function(name) {
+            component(name, type)
+        })
+    })
+    return Promise.resolve();
+}
+
+// process single component template from pug to twig+data to html+layout
+function component(name, type) {
+    if(type == 'base') {
+        var layout = fs.readFileSync('../styleguide/base.html', 'utf8');
+    } else {
+        var layout = fs.readFileSync('../styleguide/components.html', 'utf8');
+    }
+    var i = layout.indexOf('<body>');
+    var start = layout.substring(0, i+6);
+    var end = layout.substring(i+6)
+    return gulp.src(type+'/'+name+'/'+name+'.pug')
+        .pipe($.replace(/\| {{ .*image\(.+?}}/g, function(match){
+            var parts = match.split(',')
+            return `img(src="{{${parts[1]}.src }}")`
+        }))
+        .pipe($.replace(/\| {% set .+ craft\..+?%}/g, ''))
+        .pipe($.pug())
+        .pipe($.rename({
+            extname: ".twig"
+        }))
+        .pipe($.replace(/getUrl\(.*?\)/g, 'src'))
+        .pipe($.replace('.all()', ''))
+        .pipe($.replace('getChildren()', 'submenu'))
+        .pipe($.replace(')|t', ')'))
+        .pipe($.replace('{{ csrfInput() }}', ''))
+        .pipe(gulp.dest('../styleguide/'+type+'/'+name+'/'))
+        .pipe($.data(function() {
+            var data = fs.readFileSync(type+'/'+name+'/'+name+'.data.json');
+            return JSON.parse(data);
+        }))
+        .pipe($.twig())
+        .pipe($.modifyFile((content, path, file) => {
+            return `${start}${content}${end}`
+        }))
+        .pipe(gulp.dest('../styleguide/'+type+'/'+name+'/'))
+}
+
+function preCleanStyleguideDir() {
+    return del([
+        '../styleguide/components/**/*.*',
+        '../styleguide/base/**/*.*',
+    ], {
+        force: true
+    });
+}
+
+function cleanStyleguideDir() {
+    return del([
+        '../styleguide/components/**/*.twig',
+        '../styleguide/base/**/*.twig',
+        '../styleguide/img/styleguide'
+    ], {
+        force: true
+    });
+}
+
+function malvidcopy() {
+    return gulp.src(['components/**/*.sass','components/**/*.data.json','components/**/*.md','components/**/*.pug'])
+        .pipe(gulp.dest('../styleguide/components/'))
+    && gulp.src(['base/**/*.sass','base/**/*.data.json','base/**/*.md','base/**/*.pug'])
+        .pipe(gulp.dest('../styleguide/base/'));
+}
+
+async function malvidbuild() {
+    var name = require('minimist')(process.argv)['name'] || 'styleguide';
+
+    const results = await malvid({
+        src: '',
+        url: (url) => '/' + name + url,
+        pattern: "{_components/*,base}/**/*.pug",
+        resolvers: [
+            {
+                id: 'view',
+                label: 'View',
+                languages: [ 'twig', 'pug' ],
+                resolve: (fileName, fileExt) => [ `${ fileName }${ fileExt }` ]
+            },
+            {
+                id: 'data',
+                label: 'Data',
+                languages: [ 'json', 'js' ],
+                parse: async (contents, filePath) => {
+
+                    // Allow empty files
+                    if ((await contents).trim() === '') return '{}'
+
+                    // Require uncached JS or JSON file and stringify it
+                    return JSON.stringify(continuousStealthyRequire(filePath), null, 2)
+
+                },
+                resolve: (fileName, fileExt) => [ `${ fileName }.data.json`, `${ fileName }.data.js` ]
+            },
+            {
+                id: 'notes',
+                label: 'Notes',
+                languages: [ 'markdown' ],
+                resolve: (fileName, fileExt) => [ `${ fileName }.md` ]
+            },
+            {
+                id: 'styles',
+                label: 'Styles',
+                languages: [ 'sass', 'scss', 'css' ],
+                resolve: (fileName, fileExt) => [ `${ fileName }.sass`, `${ fileName }.scss`, `${ fileName }.css` ]
+            },
+            {
+                id: 'script',
+                label: 'Script',
+                languages: [ 'js' ],
+                resolve: (fileName, fileExt) => [ `${ fileName }.js` ]
+            },
+            {
+                id: 'config',
+                label: 'Config',
+                languages: [ 'json' ],
+                parse: async (contents, filePath) => {
+
+                    // Allow empty files
+                    if ((await contents).trim() === '') return {}
+
+                    // Require uncached JS or JSON
+                    return continuousStealthyRequire(filePath)
+
+                },
+                resolve: (fileName, fileExt) => [ `${ fileName }.config.json` ]
+            }
+        ],
+        "statuses": {
+            "backlog": {
+                "label": "Offen",
+                "description": "Block fertig, noch nicht im CMS",
+                "color": "#f6e455"
+            },
+            "blocked": {
+                "label": "Blocked",
+                "description": "Block fertig, gibt noch Klärungsbedarf",
+                "color": "#f62a32"
+            },
+            "done": {
+                "label": "Fertig",
+                "description": "Block fertig, in CMS fertig",
+                "color": "#089820"
+            }
+        }
+    })
+
+    const html = await results.html()
+    const json = await results.json()
+
+    await pAll([
+        () => util.promisify(fs.writeFile)('../styleguide/index.html', html),
+        () => util.promisify(fs.writeFile)('../styleguide/index.html.json',  JSON.stringify(json))
+    ])
+}
+
+function styleguideSass(filestream, destination) {
+    return filestream
+        .pipe($.if(isDevelopment(), $.sourcemaps.init()))
+        .pipe($.sass())
+        .pipe($.if(isProduction(), $.postcss([
+            autoprefixer({ browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'] }),
+            cssnano()
+        ]), $.postcss([
+            autoprefixer({ browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'] })
+        ])))
+        .pipe($.replace('/fonts/', '../fonts/'))
+        .pipe($.if(isDevelopment(), $.sourcemaps.write()))
+        .pipe(gulp.dest(destination));
+}
+
+function styleguideImagine(file, destination) {
+    return gulp.src(file)
+        .pipe($.rename({dirname: ''}))
+        .pipe(gulp.dest('../styleguide/img' + destination));
+}
+
+function styleguideFonts(files, destination) {
+    return  gulp.src(files)
+                .pipe(gulp.dest('../styleguide/fonts' + destination))
+            &&
+            gulp.src('node_modules/@fortawesome/fontawesome-pro/webfonts/*')
+                .pipe(gulp.dest('../styleguide/fonts'))
+            &&
+            gulp.src('node_modules/lightgallery/dist/fonts/*')
+                .pipe(gulp.dest('../styleguide/fonts'));
+}
+
+gulp.task('styleguideFonts', function() {
+    return styleguideFonts('fonts/**/*', '');
+});
+
+gulp.task('styleguideImg', function() {
+    return styleguideImagine(['img/**/*'], '');
+});
+
+gulp.task('styleguideJs', function() {
+    return require('./functions.js').script('../styleguide/js');
+});
+
+gulp.task('styleguideSass', gulp.series(functions.componentsSass, function() {
+    return styleguideSass(gulp.src('sass/styles.sass'), '../styleguide/css');
+}));
+
+gulp.task('malvid', gulp.series(preCleanStyleguideDir, layoutTemplates, macrosTemplates, pageComponents, malvidcopy, malvidbuild, cleanStyleguideDir));
+
+gulp.task('styleguide', gulp.parallel('malvid', 'styleguideSass', 'styleguideJs', 'styleguideImg', 'styleguideFonts'));

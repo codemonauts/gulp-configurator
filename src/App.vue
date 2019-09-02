@@ -38,8 +38,8 @@ export default {
   },
   mounted() {
     snippets.tabs.forEach((tab) => {
-      tab.snippets.forEach((part) => {
-        this.$store.dispatch('retrieveSnippet', {'type': tab.type, 'part': part.part})
+      tab.snippets.forEach((snippet) => {
+          this.$store.dispatch('retrieveSnippet', {'group': snippet.group, 'type': tab.type, 'part': snippet.part, 'lang': snippet.lang, 'note': snippet.note})
       })
     })
   }

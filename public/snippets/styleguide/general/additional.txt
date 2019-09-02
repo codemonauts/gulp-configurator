@@ -1,0 +1,1 @@
+functions.templates(gulp.src('_components/**/*.pug'), '../templates/_components') &&

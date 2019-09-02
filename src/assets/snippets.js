@@ -8,9 +8,26 @@ export default {
                 development: ['glob-watcher', 'fancy-log', 'beeper', 'gulp-plumber', 'gulp-docker-notify'],
             },
             snippets: [
-                {'part': 'base', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'}
-            ]
+                {'group': 'simple', 'part': 'base', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'functionsJs', 'part': 'base', 'lang': 'javascript',
+                'note': [{
+                    line: 8,
+                    note: 'import functions from dedicated file'
+                }]},
+                {'group': 'functionsJs', 'part': 'functions', 'lang': 'javascript',
+                    'note': [{
+                        note: 'the base expects this file to be in a directory called tasks'
+                    }]
+                },
+                {'group': 'styleguide', 'part': 'base', 'lang': 'javascript',
+                    'note': [{
+                        'line': 10,
+                        'note': 'import styleguide tasks via hub'
+                    }]
+                }
+            ],
+            parts: ['base', 'task', 'functions'],
         },
         {
             title: 'Templates (pug)',
@@ -20,20 +37,31 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
-            ],
-            notes: {
-                task: [{
-                    line: 2,
-                    note: 'destination directory for craft 2: ../craft/templates'
-                }],
-                watch: [{
-                    line: 11,
-                    note: 'destination directory for craft 2: ../craft/templates'
-                }]
-            },
+                    {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                    {'group': 'simple', 'part': 'task', 'lang': 'javascript',
+                        'note': [{
+                            line: 2,
+                            note: 'destination directory for craft 2: ../craft/templates'
+                        }]
+                    },
+                    {'group': 'simple', 'part': 'watch', 'lang': 'javascript'},
+                    {'group': 'functionsJs', 'part': 'task', 'lang': 'javascript',
+                        'note': [{
+                            line: 2,
+                            note: 'destination directory for craft 2: ../craft/templates'
+                        }]
+                    },
+                    {'group': 'functionsJs', 'part': 'watch', 'lang': 'javascript'},
+                    {'group': 'styleguide', 'part': 'function', 'lang': 'javascript'},
+                    {'group': 'styleguide', 'part': 'task', 'lang': 'javascript',
+                        'note': [{
+                            line: 2,
+                            note: 'destination directory for craft 2: ../craft/templates'
+                        }]
+                    },
+                    {'group': 'styleguide', 'part': 'watch', 'lang': 'javascript'}
+                ],
+            parts: ['function', 'task', 'watch'],
             directory: '"../templates/**/*"',
             task: 'templates'
         },
@@ -45,17 +73,17 @@ export default {
                 development: ['gulp-sourcemaps']
             },
             snippets: [
-                {'part': 'import', 'lang': 'javascript'},
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
+                {'group': 'simple', 'part': 'import', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'watch', 'lang': 'javascript',
+                    'note': [{
+                        line: '3',
+                        note: 'if using functions.js call sass-function with functions.sass(...)'
+                    }]
+                }
             ],
-            notes: {
-                watch: [{
-                    line: '3',
-                    note: 'if using functions.js call sass-function with functions.sass(...)'
-                }]
-            },
+            parts: ['import', 'function', 'task', 'watch'],
             directory: '"../public/css/**/*"',
             task: 'sass'
         },
@@ -67,11 +95,12 @@ export default {
                 development: ['gulp-sourcemaps']
             },
             snippets: [
-                {'part': 'import', 'lang': 'javascript'},
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
+                {'group': 'simple', 'part': 'import', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'watch', 'lang': 'javascript'}
             ],
+            parts: ['import', 'function', 'task', 'watch'],
             directory: '"../public/js/**/*"',
             task: 'js'
         },
@@ -83,10 +112,11 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
+                {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'watch', 'lang': 'javascript'}
             ],
+            parts: ['function', 'task', 'watch'],
             directory: '"../public/img/**/*"',
             task: 'img'
         },
@@ -98,10 +128,11 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
+                {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'watch', 'lang': 'javascript'}
             ],
+            parts: ['function', 'task', 'watch'],
             directory: '"../templates/**/*"',
             task: 'twig'
         },
@@ -113,11 +144,12 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'import', 'lang': 'javascript'},
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
+                {'group': 'simple', 'part': 'import', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'watch', 'lang': 'javascript'}
             ],
+            parts: ['import', 'function', 'task', 'watch'],
             directory: '"../templates/**/*"',
             task: 'email'
         },
@@ -129,20 +161,20 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'script', 'lang': 'javascript'},
-                {'part': 'style', 'lang': 'sass'},
-            ],
-            directory: '',
-            notes: {
-                style: [{
-                    line: '1',
-                    note: 'copy the _settings.scss from node_modules/foundation-sites/scss/settings/ as _foundation-settings.scss into your sass directory and change the util-import to @import \'../node_modules/foundation-sites/scss/util/util\';'
+                {'group': 'general', 'part': 'script', 'lang': 'javascript'},
+                {'group': 'general', 'part': 'style', 'lang': 'sass',
+                    'note': [{
+                            line: '1',
+                            note: 'copy the _settings.scss from node_modules/foundation-sites/scss/settings/ as _foundation-settings.scss into your sass directory and change the util-import to @import \'../node_modules/foundation-sites/scss/util/util\';'
+                        },
+                        {
+                            line: '2',
+                            note: 'either load all styles for the foundation components or adjust CSS output, see: https://foundation.zurb.com/sites/docs/sass.html'
+                        }]
                 },
-                {
-                    line: '2',
-                    note: 'either load all styles for the foundation components or adjust CSS output, see: https://foundation.zurb.com/sites/docs/sass.html'
-                }]
-            },
+            ],
+            parts: ['script', 'style'],
+            directory: '',
         },
         {
             title: 'Fonts',
@@ -152,10 +184,11 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'function', 'lang': 'javascript'},
-                {'part': 'task', 'lang': 'javascript'},
-                {'part': 'watch', 'lang': 'javascript'}
+                {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'task', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'watch', 'lang': 'javascript'}
             ],
+            parts: ['function', 'task', 'watch'],
             directory: '"../public/fonts/**/*"',
         },
         {
@@ -166,17 +199,37 @@ export default {
                 development: []
             },
             snippets: [
-                {'part': 'additional', 'lang': 'javascript'},
-                {'part': 'npmrc', 'lang': 'shell'},
-                {'part': 'style', 'lang': 'sass'}
+                {'group': 'general', 'part': 'additional', 'lang': 'javascript'},
+                {'group': 'general', 'part': 'npmrc', 'lang': 'shell',
+                    'note': [{
+                        note: 'put file as .npmrc into root source directory next to package.json and gulpfile'
+                    }]
+                },
+                {'group': 'general', 'part': 'style', 'lang': 'sass',
+                    'note': [{
+                        note: 'add snippet to fonts function'
+                    }]
+                }
             ],
+            parts: ['additional', 'npmrc', 'style'],
             directory: '',
+        },
+        {
+            title: 'Styleguide',
+            type: 'styleguide',
+            packages: {
+                dependencies: ['malvid', 'p-all', 'continuous-stealthy-require', 'util', 'gulp-hub', 'gulp-multi-dest'],
+                development: []
+            },
+            snippets: [
+                {'group': 'general', 'part': 'styleguide', 'lang': 'javascript'},
+                {'group': 'general', 'part': 'additional', 'lang': 'javascript'},
+            ],
+            parts: ['styleguide', 'additional'],
+            directory: '"../styleguide/**/*"',
             notes: {
-                npmrc: [{
-                    note: 'put file as .npmrc into root source directory next to package.json and gulpfile'
-                }],
                 additional: [{
-                    note: 'add snippet to fonts function'
+                    note: 'add to templates task'
                 }]
             },
         }

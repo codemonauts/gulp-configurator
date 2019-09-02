@@ -1,0 +1,11 @@
+function templates(filestream, destination) {
+    return filestream
+        .pipe($.pug())
+        .pipe($.rename({
+            extname: ".twig"
+        }))
+        .pipe($.replace("{% include '../../../", "{% include '"))
+        .pipe($.replace("{% from '../../../", "{% from '"))
+        .pipe($.replace('src="../../../', 'src="/'))
+        .pipe(gulp.dest(destination))
+}

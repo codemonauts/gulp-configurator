@@ -1,6 +1,6 @@
 export default {
-  githubHistoryUrl: (type, part) => {
-    return `https://github.com/codemonauts/gulp-configurator/commits/master/public/snippets/${type}/${part}.txt`
+  githubHistoryUrl: (type, group, part) => {
+    return `https://github.com/codemonauts/gulp-configurator/commits/master/public/snippets/${type}/${group}/${part}.txt`
   },
   listPackages(packages, dev = false) {
     var npm = 'npm install '

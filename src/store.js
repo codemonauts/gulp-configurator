@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    snippets: {},
+    snippets: [],
     notification: {
       type: '',
       message: ''
@@ -16,13 +16,7 @@ export default new Vuex.Store({
   },
   mutations: {
     snippet(state, snippet) {
-      if(state.snippets.hasOwnProperty(snippet.type)) {
-          state.snippets[snippet.type][snippet.part] = snippet.code
-      }
-      else {
-        state.snippets[snippet.type] = {}
-        state.snippets[snippet.type][snippet.part] = snippet.code
-      }
+      state.snippets.push(snippet)
     },
     error(state, value) {
       state.error = value
@@ -36,13 +30,10 @@ export default new Vuex.Store({
   },
   getters: {
     getSnippet: (state) => (data) => {
-      if(state.snippets.hasOwnProperty(data.type)) {
-        if(state.snippets[data.type].hasOwnProperty(data.part)) {
-          return state.snippets[data.type][data.part]
-        }
-      } else {
-        return 'not available'
-      }
+      return state.snippets.filter(snippet => snippet.group == data.group && snippet.type == data.type && snippet.part == data.part)
+    },
+    getCodes: (state) => (type, part) => {
+      return state.snippets.filter(snippet => snippet.info.type == type && snippet.info.part == part)
     },
     notification: (state) => {
       return state.notification
@@ -53,14 +44,15 @@ export default new Vuex.Store({
   },
   actions: {
     retrieveSnippet({commit}, data) {
+      let url = `/snippets/${data.type}/${data.group}/${data.part}.txt`
       axios
-          .get(`/snippets/${data.type}/${data.part}.txt`)
+          .get(url)
           .then((response) => {
-              commit('snippet', {'type': data.type, 'part': data.part, 'code': response.data});
+              commit('snippet', {'info': data, 'code': response.data});
             }
           )
           .catch(() => {
-            commit('notification', {'type': 'error', 'message': 'Error while retrieving snippets from server.'})
+            commit('notification', {'type': 'error', 'message': 'Error while retrieving snippets from server. ' + url})
           })
     },
     setConfig({commit}, data) {

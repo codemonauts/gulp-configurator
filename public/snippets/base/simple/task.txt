@@ -8,7 +8,7 @@ return del([
 });
 
 gulp.task('build', gulp.parallel(/* add tasks here */), () => {});
-gulp.task('watch', gulp.series(gulp.parallel(/* add tasks here */), function watch () {
+gulp.task('watch', gulp.series(gulp.parallel(/* add tasks here */), /* add styleguide here */ function watch () {
     log('Start watching...');
 
     /* * * WATCHERS * * */

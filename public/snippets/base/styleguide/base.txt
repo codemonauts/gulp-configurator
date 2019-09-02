@@ -1,0 +1,27 @@
+var gulp = require('gulp');
+var log = require('fancy-log');
+var $ = require('gulp-load-plugins')();
+var watcher = require('glob-watcher');
+
+/* * * IMPORTS * * */
+
+var functions = require('./tasks/functions.js');
+
+var HubRegistry = require('gulp-hub');
+var hub = new HubRegistry(['tasks/styleguide.js']);
+gulp.registry(hub);
+
+var del = require('del');
+
+var env = require('minimist')(process.argv.slice(2))._[0] || 'development';
+
+function onError(err) {
+    require('beeper')();
+    log.error(err);
+}
+var isDevelopment = function() {
+    return (env === 'development');
+};
+var isProduction = function () {
+    return !isDevelopment();
+};

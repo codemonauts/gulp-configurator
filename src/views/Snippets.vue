@@ -1,7 +1,7 @@
 <template lang="pug">
     v-tabs(show-arrows)
-      v-tab(v-for="tab in snippets.tabs" :key='tab.type') {{tab.title}}
-      v-tab-item(v-for="tab in snippets.tabs" :key='tab.type')
+      v-tab(v-for="tab in content.tabs" :key='tab.type') {{tab.title}}
+      v-tab-item(v-for="tab in content.tabs" :key='tab.type')
         v-container
           v-layout
             v-flex
@@ -17,19 +17,21 @@
                   ul
                     li(v-for="p in tab.packages.development") {{p}}
                   CodeSnippet(:snippet='listPackages(tab.packages.development, true)' language='shell')
-              .snippets(v-for='snippet in tab.snippets')
-                h3 {{snippet.part}}
-                .notes(v-if='getNotes(tab, snippet.part)')
-                  v-alert(border='left' dense text colored-border color='blue' v-for='note in getNotes(tab, snippet.part)' v-bind:key='note.line')
-                    strong(v-if='note.line') line {{ note.line }}
-                    br(v-if='note.line')
-                    | {{ note.note }}
-                CodeSnippet(:snippet='retrieveSnippet(tab.type, snippet.part)' :language='snippet.lang' :history='githubHistoryUrl(tab.type, snippet.part)' :highlight='getNotes(tab, snippet.part) ? getNotes(tab, snippet.part).map(note => note.line) : ""' lineNumbers="true")
-
+              .snippets(v-for='part in tab.parts')
+                h3 {{part}}
+                v-tabs
+                  v-tab(v-for='snippet in getCodes(tab.type, part)') {{snippet.info.group}}
+                  v-tab-item(v-for='snippet in getCodes(tab.type, part)')
+                    .notes(v-if='snippet.info.note')
+                      v-alert(v-for='note in snippet.info.note' v-bind:key='note.line' border='left' dense text colored-border color='blue')
+                        strong(v-if='note.line') line {{ note.line }}
+                        br(v-if='note.line')
+                        | {{ note.note }}
+                    CodeSnippet(:snippet='snippet.code' :language='snippet.info.lang' :highlight='snippet.info.note ? snippet.info.note.map(n => n.line) : ""' lineNumbers='true' :history='githubHistoryUrl(tab.type, snippet.info.group, part)')
 </template>
 
 <script>
-import snippets from '../assets/snippets'
+import content from '../assets/snippets'
 import CodeSnippet from '../components/CodeSnippet'
 import { mapGetters } from 'vuex'
 import utils from '../utils'
@@ -40,29 +42,27 @@ export default {
   },
   data() {
     return {
-      snippets: snippets
+      content: content
     }
   },
   computed: {
-    ...mapGetters(['getSnippet'])
+    ...mapGetters(['getSnippet', 'getCodes'])
   },
   methods: {
-    retrieveSnippet(type, part) {
-      return this.getSnippet({'type': type, 'part': part})
+    retrieveSnippet(group, type, part) {
+      return this.getSnippet({'group': group, 'type': type, 'part': part})
     },
-    githubHistoryUrl(type, part) {
-      return utils.githubHistoryUrl(type, part)
+    githubHistoryUrl(type, group, part) {
+      return utils.githubHistoryUrl(type, group, part)
     },
     listPackages(packages, dev=false) {
       return utils.listPackages(packages, dev)
-    },
-    getNotes(tab, part) {
-      if(tab.hasOwnProperty('notes')) {
-        if(tab.notes.hasOwnProperty(part)) {
-          return tab.notes[part]
-        }
-      }
     }
   }
 };
 </script>
+
+<style lang='sass' scoped>
+.notes
+  margin-top: 1rem
+</style>
