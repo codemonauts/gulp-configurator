@@ -63,7 +63,8 @@ export default {
                 ],
             parts: ['function', 'task', 'watch'],
             directory: '"../templates/**/*"',
-            task: 'templates'
+            task: 'templates',
+            function: 'templates'
         },
         {
             title: 'Styles (sass)',
@@ -85,7 +86,8 @@ export default {
             ],
             parts: ['import', 'function', 'task', 'watch'],
             directory: '"../public/css/**/*"',
-            task: 'sass'
+            task: 'sass',
+            function: 'style'
         },
         {
             title: 'JavaScript',
@@ -102,7 +104,8 @@ export default {
             ],
             parts: ['import', 'function', 'task', 'watch'],
             directory: '"../public/js/**/*"',
-            task: 'js'
+            task: 'js',
+            function: 'script'
         },
         {
             title: 'Images',
@@ -118,7 +121,8 @@ export default {
             ],
             parts: ['function', 'task', 'watch'],
             directory: '"../public/img/**/*"',
-            task: 'img'
+            task: 'img',
+            function: 'imagine'
         },
         {
             title: 'Twig (XML)',
@@ -134,7 +138,8 @@ export default {
             ],
             parts: ['function', 'task', 'watch'],
             directory: '"../templates/**/*"',
-            task: 'twig'
+            task: 'twig',
+            function: 'copy'
         },
         {
             title: 'E-Mail',
@@ -151,7 +156,8 @@ export default {
             ],
             parts: ['import', 'function', 'task', 'watch'],
             directory: '"../templates/**/*"',
-            task: 'email'
+            task: 'email',
+            function: 'email'
         },
         {
             title: 'Foundation',
@@ -199,13 +205,13 @@ export default {
                 development: []
             },
             snippets: [
-                {'group': 'general', 'part': 'additional', 'lang': 'javascript'},
-                {'group': 'general', 'part': 'npmrc', 'lang': 'shell',
+                {'group': 'simple', 'part': 'additional', 'lang': 'javascript'},
+                {'group': 'simple', 'part': 'npmrc', 'lang': 'shell',
                     'note': [{
                         note: 'put file as .npmrc into root source directory next to package.json and gulpfile'
                     }]
                 },
-                {'group': 'general', 'part': 'style', 'lang': 'sass',
+                {'group': 'simple', 'part': 'style', 'lang': 'sass',
                     'note': [{
                         note: 'add snippet to fonts function'
                     }]
@@ -222,8 +228,8 @@ export default {
                 development: []
             },
             snippets: [
-                {'group': 'general', 'part': 'styleguide', 'lang': 'javascript'},
-                {'group': 'general', 'part': 'additional', 'lang': 'javascript'},
+                {'group': 'styleguide', 'part': 'styleguide', 'lang': 'javascript'},
+                {'group': 'styleguide', 'part': 'additional', 'lang': 'javascript'},
             ],
             parts: ['styleguide', 'additional'],
             directory: '"../styleguide/**/*"',

@@ -10,6 +10,7 @@
             CodeSnippet(:snippet='listPackages(output.development, true)' language='shell')
           OverlaySnippet(name='gulpfile' :snippet='output.gulpfile' language='js')
           OverlaySnippet(v-for='(snippet, name) in output.more' :name='name' :snippet='snippet.snippet' :language='snippet.lang')
+          OverlaySnippet(v-if='config.files == "2"' name='functions.js' :snippet='output.functions' language='javascript')
 </template>
 
 <script>
@@ -34,8 +35,7 @@ export default {
   computed: {
     ...mapGetters(['config', 'getSnippet']),
     output () {
-      var base = this.getSnippet({'type': 'base', 'part': 'base'})
-      var basetasks = this.getSnippet({'type': 'base', 'part': 'task'})
+      var basetasks = this.getCode('base', 'task')
 
       var directories = []
       var content = {}
@@ -44,6 +44,7 @@ export default {
       var packages = basetab.packages.dependencies
       var development = basetab.packages.development
       var tasks = []
+      let moduleExport = []
 
       this.config.components.forEach((comp) => {
         var tab = this.getTab(comp)
@@ -54,15 +55,17 @@ export default {
         packages = packages.concat(tab.packages.dependencies)
         development = development.concat(tab.packages.development)
 
-        tab.snippets.forEach((snippet) => {
-          let part = snippet.part
+        tab.parts.forEach((part) => {
           if(content.hasOwnProperty(part)) {
-            content[part]['snippet'] += this.getSnippet({'type': comp, 'part': part}) + '\n'
+            content[part]['snippet'] += this.getCode(comp, part) + '\n'
           } else {
             content[part] = {
-              'snippet': this.getSnippet({'type': comp, 'part': part}) + '\n',
-              'lang': snippet.lang
+              'snippet': this.getCode(comp, part) + '\n',
+              'lang': 'javascript'
             }
+          }
+          if(part == 'function') {
+            moduleExport.push(tab.function)
           }
         })
         if(!directories.includes(tab.directory)) {
@@ -71,12 +74,30 @@ export default {
 
       })
 
-      var gulpfile = base
-      if(content.import) {
-        gulpfile = gulpfile.replace('/* * * IMPORTS * * */', content.import.snippet) + '\n'
+      // read base for gulpfile and functionJS
+      var gulpfile = this.getCode('base', 'base')
+      var functionsJs = this.getCode('base', 'functions')
+
+      // add import statements
+      if(this.config.files == '1') {
+        if(content.import) {
+          gulpfile = gulpfile.replace('/* * * IMPORTS * * */', content.import.snippet) + '\n'
+        }
+      } else {
+        if(content.import) {
+          gulpfile = gulpfile.replace('/* * * IMPORTS * * */', '')
+          functionsJs = functionsJs.replace('/* * * IMPORTS * * */', content.import.snippet) + '\n'
+        }
       }
+
+      // add functions
       if(content.function) {
-        gulpfile += content.function.snippet + '\n'
+        if(this.config.files == '1') {
+          gulpfile += content.function.snippet + '\n'
+        } else {
+          functionsJs = functionsJs.replace('/* * * FUNCTIONS * * */', content.function.snippet)
+          functionsJs = functionsJs.replace('/* * * EXPORTS * * */', moduleExport.map(exp => `${exp}: ${exp}`))
+        }
       }
       if(content.task) {
         gulpfile += content.task.snippet + '\n'
@@ -90,11 +111,14 @@ export default {
       if(tasks.length) {
         gulpfile = gulpfile.replace(/\/\* add tasks here \*\//g, tasks)
       }
+      if(content.styleguide) {
+        gulpfile = gulpfile.replace('/* add styleguide here */', "'styleguide',")
+      }
 
       var defaultTasks = ['watch', 'import', 'function', 'task']
       defaultTasks.forEach(e => delete content[e])
 
-      return { gulpfile: gulpfile, packages: packages, development: development, more: content }
+      return { gulpfile: gulpfile, packages: packages, development: development, more: content, functions: functionsJs }
     }
   },
   methods: {
@@ -104,6 +128,28 @@ export default {
     getTab(type) {
       var filter = snippets.tabs.filter((tab) => { if(tab.type == type) return tab })
       return filter[0]
+    },
+    getCode(type, part) {
+      // get base snippet
+      let snippet = this.getSnippet({'group': 'simple', 'type': type, 'part': part})
+
+      if(this.config.files == 2) {
+        let tmp = this.getSnippet({'group': 'functionsJs', 'type': type, 'part': part})
+        if(tmp.length){
+          snippet = tmp
+        }
+      }
+
+      if(this.config.components.includes('styleguide')) {
+        let tmp = this.getSnippet({'group': 'styleguide', 'type': type, 'part': part})
+        if(tmp.length){
+          snippet = tmp
+        }
+      }
+
+      if(snippet.length > 0)
+        return snippet[0].code
+      return ''
     }
   }
 }

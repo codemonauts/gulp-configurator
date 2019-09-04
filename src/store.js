@@ -30,7 +30,7 @@ export default new Vuex.Store({
   },
   getters: {
     getSnippet: (state) => (data) => {
-      return state.snippets.filter(snippet => snippet.group == data.group && snippet.type == data.type && snippet.part == data.part)
+      return state.snippets.filter(snippet => snippet.info.group == data.group && snippet.info.type == data.type && snippet.info.part == data.part)
     },
     getCodes: (state) => (type, part) => {
       return state.snippets.filter(snippet => snippet.info.type == type && snippet.info.part == part)
