@@ -1,1 +1,2 @@
-@fortawesome:registry=https://npm.fontawesome.com/<YOUR TOKEN HERE>
+@fortawesome:registry=https://npm.fontawesome.com/
+//npm.fontawesome.com/:_authToken=<YOUR TOKEN HERE>
