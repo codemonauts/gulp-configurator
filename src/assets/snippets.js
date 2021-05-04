@@ -33,10 +33,11 @@ export default {
             title: 'Templates (pug)',
             type: 'pug',
             packages: {
-                dependencies: ['gulp-pug', 'gulp-rename'],
+                dependencies: ['gulp-pug-3', 'gulp-rename'],
                 development: []
             },
             snippets: [
+                    {'group': 'simple', 'part': 'import', 'lang': 'javascript'},
                     {'group': 'simple', 'part': 'function', 'lang': 'javascript'},
                     {'group': 'simple', 'part': 'task', 'lang': 'javascript',
                         'note': [{
@@ -61,7 +62,7 @@ export default {
                     },
                     {'group': 'styleguide', 'part': 'watch', 'lang': 'javascript'}
                 ],
-            parts: ['function', 'task', 'watch'],
+            parts: ['import', 'function', 'task', 'watch'],
             directory: '"../templates/**/*"',
             task: 'templates',
             function: 'templates'

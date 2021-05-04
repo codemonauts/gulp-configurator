@@ -1,6 +1,6 @@
 function templates(filestream, destination) {
     return filestream
-    .pipe($.pug())
+    .pipe(pug())
     .pipe($.rename({
         extname: ".twig"
     }))
