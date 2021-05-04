@@ -4,7 +4,7 @@ export default {
             title: 'Base',
             type: 'base',
             packages: {
-                dependencies: ['gulp@4.0.0', 'gulp-load-plugins', 'minimist', 'del'],
+                dependencies: ['gulp@4.0.0', 'gulp-load-plugins', 'minimist', 'del', 'gulp-if'],
                 development: ['glob-watcher', 'fancy-log', 'beeper', 'gulp-plumber', 'gulp-docker-notify'],
             },
             snippets: [
